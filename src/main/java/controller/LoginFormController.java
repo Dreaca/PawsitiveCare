@@ -22,6 +22,17 @@ public class LoginFormController {
         LoginFormDto login = new LoginFormDto(userName,password);
 
         boolean authenticateResult = LoginModel.authenticate(login);
+
+        if(authenticateResult){
+            String currentUser = LoginModel.getUser(login);
+            if(currentUser.equals("Admin")){
+                System.out.println("Admin logged");
+            } else if (currentUser.startsWith("E")) {
+                System.out.println("Employee Logged");
+            }
+        }
+        else {
+            System.out.println("Login Failed");}
     }
 
 

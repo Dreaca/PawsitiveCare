@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginFormController">
    <children>
       <TextField fx:id="txtUserNAme" layoutX="215.0" layoutY="132.0" promptText="user name" />
-      <TextField fx:id="txtPassword" layoutX="215.0" layoutY="188.0" promptText="password" />
-      <JFXButton fx:id="btnLogin" buttonType="RAISED" layoutX="273.0" layoutY="247.0" ripplerFill="#09afe5" style="-fx-background-color: aqua; -fx-background-radius: 25;" text="Login" />
+      <JFXButton fx:id="btnLogin" buttonType="RAISED" layoutX="273.0" layoutY="247.0" onAction="#loginOnAction" ripplerFill="#09afe5" style="-fx-background-color: aqua; -fx-background-radius: 25;" text="Login" />
+      <PasswordField fx:id="txtPassword" layoutX="215.0" layoutY="176.0" />
    </children>
 </AnchorPane>

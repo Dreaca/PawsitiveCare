@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DbConnection {
     private static DbConnection dbConnection;
 
-    private Connection connection;
+    private  Connection connection;
     private DbConnection() throws SQLException {
         connection = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/pawsitiveCare",
@@ -15,8 +15,8 @@ public class DbConnection {
                 "Ijse@1234"
         );
     }
-    public DbConnection getInstance() throws SQLException {
-        return (connection == null)?dbConnection = new DbConnection():dbConnection;
+    public static DbConnection getInstance() throws SQLException {
+        return (dbConnection == null)?dbConnection = new DbConnection():dbConnection;
     }
     public Connection getConnection(){
         return connection;

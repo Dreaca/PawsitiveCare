@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminFormController">
+   <children>
+      <AnchorPane layoutX="10.0" layoutY="7.0" prefHeight="379.0" prefWidth="196.0" style="-fx-background-color: aqua;">
+         <children>
+            <JFXButton fx:id="btnUser" buttonType="RAISED" layoutX="18.0" layoutY="14.0" onAction="#userBtnOnAction" prefHeight="59.0" prefWidth="154.0" style="-fx-background-color: white; -fx-background-radius: 15;" text="User" />
+            <JFXButton fx:id="btnEmployee" buttonType="RAISED" layoutX="14.0" layoutY="90.0" onAction="#employeeOnAction" prefHeight="24.0" prefWidth="172.0" style="-fx-background-color: white; -fx-background-radius: 11;" text="Employees" />
+            <JFXButton buttonType="RAISED" layoutX="15.0" layoutY="125.0" onAction="#vetOnAction" prefHeight="24.0" prefWidth="172.0" style="-fx-background-color: white; -fx-background-radius: 11;" text="Veterinaries" />
+            <JFXButton buttonType="RAISED" layoutX="15.0" layoutY="157.0" onAction="#customerOnAction" prefHeight="24.0" prefWidth="172.0" style="-fx-background-color: white; -fx-background-radius: 11;" text="Customer" />
+            <JFXButton buttonType="RAISED" layoutX="16.0" layoutY="188.0" onAction="#reportOnAction" prefHeight="24.0" prefWidth="172.0" style="-fx-background-color: white; -fx-background-radius: 11;" text="Reports" />
+            <JFXButton buttonType="RAISED" layoutX="17.0" layoutY="219.0" onAction="#supplierOnAction" prefHeight="24.0" prefWidth="172.0" style="-fx-background-color: white; -fx-background-radius: 11;" text="Supplier" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="221.0" layoutY="10.0" prefHeight="373.0" prefWidth="367.0" style="-fx-background-color: grey;" />
+   </children>
+</AnchorPane>

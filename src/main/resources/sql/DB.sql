@@ -100,3 +100,13 @@ create table item_supplier(
 	constraint foreign key(itemId) references item(itemId) on update cascade on delete cascade,
 	constraint foreign key (suppId) references supplier(suppId) on update cascade on delete cascade
 );
+
+create table employee(
+    employeeId varchar(10) primary key not null,
+    name varchar (25),
+    address varchar(50),
+    contact varchar(25),
+    salary double,
+    userId varchar(10),
+    constraint foreign key (userId) references user(userId) on update cascade on delete cascade
+);

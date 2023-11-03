@@ -49,19 +49,19 @@ public class LoginModel {
 
 
     public static boolean authenticate(LoginFormDto login) throws SQLException {
-        userName = login.getUserName();
-        passWord = login.getPassword();
+        String usedUserName = login.getUserName();
+        String usedPassword = login.getPassword();
         boolean isValid = false;
 
         String sql = "SELECT passWord FROM user WHERE userName = ?";
 
        Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setString(1,userName);
+        pstm.setString(1,usedUserName);
         ResultSet resultSet = pstm.executeQuery();
         if(resultSet.next()){
             String pw = resultSet.getString("password");
-            if (userName.equals(pw)) {
+            if (usedPassword.equals(pw)) {
                 isValid = true;
             }
             else isValid = false;
@@ -70,17 +70,16 @@ public class LoginModel {
     }
 
     public static String getUser(LoginFormDto login) throws SQLException {
-        userName = login.getUserName();
+       String usedUserName = login.getUserName();
 
-        String sql = "SELECT userId FROM user WHERE username ?";
+        String sql = "SELECT * FROM user WHERE userName = ?";
 
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setString(1,userName);
+        pstm.setString(1,usedUserName);
         ResultSet resultSet = pstm.executeQuery();
         if (resultSet.next()){
-            String user = resultSet.getString("userName");
-            if (user.equals(userName)){
+            if (usedUserName.equals(resultSet.getString("userName"))){
                 return resultSet.getString("userId");
             }
         }

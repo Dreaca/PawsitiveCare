@@ -3,8 +3,15 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.layout.AnchorPane;
+
+import javax.naming.ldap.PagedResultsControl;
+import java.io.IOException;
 
 public class AdminFormController {
+    public AnchorPane sidePane;
     @FXML
     private JFXButton btnEmployee;
 
@@ -17,7 +24,11 @@ public class AdminFormController {
     }
 
     @FXML
-    void employeeOnAction(ActionEvent event) {
+    void employeeOnAction(ActionEvent event) throws IOException {
+        Parent vetNode = FXMLLoader.load(this.getClass().getResource("/view/ManageEmployee.fxml"));
+        this.sidePane.getChildren().clear();
+        this.sidePane.getChildren().add(vetNode);
+//        ManageEmployeeController.getEmployees();
 
     }
 
@@ -37,8 +48,10 @@ public class AdminFormController {
     }
 
     @FXML
-    void vetOnAction(ActionEvent event) {
-
+    void vetOnAction(ActionEvent event) throws IOException {
+        Parent vetNode = FXMLLoader.load(this.getClass().getResource("/view/vetForm.fxml"));
+        this.sidePane.getChildren().clear();
+        this.sidePane.getChildren().add(vetNode);
     }
 
 }

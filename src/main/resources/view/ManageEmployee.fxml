@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="employeeAnchor" prefHeight="749.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ManageEmployeeController">
+   <children>
+      <AnchorPane layoutX="14.0" layoutY="15.0" prefHeight="723.0" prefWidth="1009.0" style="-fx-background-color: cyan; -fx-background-radius: 25; -fx-border-radius: 25;">
+         <children>
+            <VBox layoutX="19.0" layoutY="22.0" prefHeight="684.0" prefWidth="970.0">
+               <children>
+                  <HBox prefHeight="363.0" prefWidth="970.0">
+                     <children>
+                        <AnchorPane prefHeight="296.0" prefWidth="327.0" style="-fx-background-color: white; -fx-background-radius: 25;">
+                           <children>
+                              <ImageView fitHeight="99.0" fitWidth="108.0" layoutX="108.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                                 <image>
+                                    <Image url="@../../../../../../Academic/doctor.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="lblEmpName" layoutX="121.0" layoutY="129.0" text="Name">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="34.0" layoutY="174.0" text="Employee ID   :" />
+                              <Label layoutX="34.0" layoutY="196.0" text="Address          :" />
+                              <Label layoutX="34.0" layoutY="219.0" text="Contact          :" />
+                              <Label layoutX="33.0" layoutY="242.0" text="User ID           :" />
+                              <Label fx:id="lblEmpID" layoutX="146.0" layoutY="174.0" text="xxxxxxxxxxxxxxxx" />
+                              <Label fx:id="lblEmpAddress" layoutX="145.0" layoutY="196.0" text="xxxxxxxxxxxxxxxx" />
+                              <Label fx:id="lblEmpContact" layoutX="145.0" layoutY="219.0" text="xxxxxxxxxxxxxxxx" />
+                              <Label fx:id="lblUserID" layoutX="143.0" layoutY="242.0" text="xxxxxxxxxxxxxxxx" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

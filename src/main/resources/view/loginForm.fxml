@@ -5,10 +5,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginFormController">
+<AnchorPane fx:id="root" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginFormController">
    <children>
-      <TextField fx:id="txtUserNAme" layoutX="215.0" layoutY="132.0" promptText="user name" />
-      <JFXButton fx:id="btnLogin" buttonType="RAISED" layoutX="273.0" layoutY="247.0" onAction="#loginOnAction" ripplerFill="#09afe5" style="-fx-background-color: aqua; -fx-background-radius: 25;" text="Login" />
-      <PasswordField fx:id="txtPassword" layoutX="215.0" layoutY="176.0" />
+      <TextField fx:id="txtUserNAme" layoutX="439.0" layoutY="197.0" prefHeight="58.0" prefWidth="505.0" promptText="user name" />
+      <JFXButton fx:id="btnLogin" buttonType="RAISED" layoutX="563.0" layoutY="395.0" onAction="#loginOnAction" prefHeight="74.0" prefWidth="214.0" ripplerFill="#09afe5" style="-fx-background-color: aqua; -fx-background-radius: 25;" text="Login" />
+      <PasswordField fx:id="txtPassword" layoutX="441.0" layoutY="284.0" prefHeight="66.0" prefWidth="503.0" promptText="Password" />
    </children>
 </AnchorPane>

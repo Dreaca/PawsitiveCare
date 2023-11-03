@@ -3,7 +3,7 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-public class EmployeeFormController {
+public class EmployeeDashController {
     @FXML
     void appointmentsOnAction(ActionEvent event) {
 

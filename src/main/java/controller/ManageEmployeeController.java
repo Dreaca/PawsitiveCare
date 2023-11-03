@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 
 public class ManageEmployeeController {
 
@@ -10,4 +11,5 @@ public class ManageEmployeeController {
     public Label lblEmpContact;
     public Label lblUserID;
 
+    public AnchorPane employeeAnchor;
 }

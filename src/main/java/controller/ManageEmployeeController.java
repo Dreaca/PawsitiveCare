@@ -9,4 +9,5 @@ public class ManageEmployeeController {
     public Label lblEmpAddress;
     public Label lblEmpContact;
     public Label lblUserID;
+
 }

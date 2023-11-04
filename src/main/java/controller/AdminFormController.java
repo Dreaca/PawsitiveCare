@@ -26,10 +26,9 @@ public class AdminFormController {
 
     @FXML
     void employeeOnAction(ActionEvent event) throws IOException, SQLException {
-        Parent vetNode = FXMLLoader.load(this.getClass().getResource("/view/ManageEmployee.fxml"));
+        Parent empNode = FXMLLoader.load(this.getClass().getResource("/view/ManageEmployee.fxml"));
         this.sidePane.getChildren().clear();
-        this.sidePane.getChildren().add(vetNode);
-        ManageEmployeeController.getEmployees();
+        this.sidePane.getChildren().add(empNode);
 
     }
 

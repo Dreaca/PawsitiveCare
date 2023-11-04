@@ -1,39 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="employeeAnchor" prefHeight="749.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ManageEmployeeController">
    <children>
-      <VBox layoutX="14.0" layoutY="15.0" prefHeight="723.0" prefWidth="1009.0">
+      <VBox fx:id="empVbox" layoutX="14.0" layoutY="15.0" prefHeight="723.0" prefWidth="1009.0">
          <children>
             <!-- Smaller card-like layout inside an AnchorPane -->
-            <HBox prefHeight="363.0" prefWidth="970.0" style="-fx-background-radius: 25;">
+            <HBox fx:id="employeeHbox" prefHeight="363.0" prefWidth="970.0" style="-fx-background-radius: 25;">
                <children>
-                  <AnchorPane fx:id="employeeCard" prefHeight="363.0" prefWidth="270.0" style="-fx-background-color: white;">
-                     <children>
-                        <ImageView fx:id="imgEmpImg" fitHeight="99.0" fitWidth="108.0" layoutX="72.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-                           <image>
-                              <Image url="@../../../../../../Academic/doctor.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="lblEmpName" layoutX="86.0" layoutY="128.0" text="Name">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="lblEmpId" layoutX="99.0" layoutY="174.0" text="EmpId" />
-                        <Label fx:id="lblAddress" layoutX="99.0" layoutY="201.0" text="Address" />
-                        <Label fx:id="lblContact" layoutX="94.0" layoutY="231.0" text="Contact" />
-                        <Label fx:id="lblSalary" layoutX="94.0" layoutY="260.0" text="Salary" />
-                        <!-- Add other labels for employee details within the AnchorPane -->
-                     </children>
-                  </AnchorPane>
+                  <AnchorPane fx:id="employeeCard" prefHeight="363.0" prefWidth="353.0" style="-fx-background-color: white;" />
                </children>
             </HBox>
             <!-- Additional smaller card-like layouts (HBox + AnchorPane) can be added within the VBox for multiple employees -->

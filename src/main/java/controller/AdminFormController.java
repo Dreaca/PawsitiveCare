@@ -7,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 
-import javax.naming.ldap.PagedResultsControl;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -26,7 +25,7 @@ public class AdminFormController {
 
     @FXML
     void employeeOnAction(ActionEvent event) throws IOException, SQLException {
-        Parent empNode = FXMLLoader.load(this.getClass().getResource("/view/ManageEmployee.fxml"));
+        Parent empNode = FXMLLoader.load(this.getClass().getResource("/view/employeeManage/ManageEmployee.fxml"));
         this.sidePane.getChildren().clear();
         this.sidePane.getChildren().add(empNode);
 

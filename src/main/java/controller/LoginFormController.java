@@ -44,7 +44,7 @@ public class LoginFormController {
     private void loadAdminDash() {
         AnchorPane anchorPane = null;
         try {
-            anchorPane = FXMLLoader.load(getClass().getResource("/view/dashBoards/adminDash.fxml"));
+            anchorPane = FXMLLoader.load(getClass().getResource("/view/dashBoards/AdminDash/adminDash.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -57,7 +57,7 @@ public class LoginFormController {
     private void loadEmployeeDash(){
         AnchorPane anchorPane = null;
         try {
-            anchorPane = FXMLLoader.load(getClass().getResource("/view/dashBoards/empDash.fxml"));
+            anchorPane = FXMLLoader.load(getClass().getResource("/view/dashBoards/EmployeeDash/empDash.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

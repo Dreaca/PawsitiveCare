@@ -26,7 +26,7 @@ public class AdminFormController {
 
     @FXML
     void customerOnAction(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(this.getClass().getResource("/view/customerForm.fxml"));
+        Parent root = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/AdminDash/customerForm.fxml"));
         this.sidePane.getChildren().clear();
         this.sidePane.getChildren().add(root);
     }
@@ -41,7 +41,7 @@ public class AdminFormController {
 
     @FXML
     void reportOnAction(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(this.getClass().getResource("/view/reportForm.fxml"));
+        Parent root = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/AdminDash/reportForm.fxml"));
         this.sidePane.getChildren().clear();
         this.sidePane.getChildren().add(root);
 
@@ -49,7 +49,7 @@ public class AdminFormController {
 
     @FXML
     void supplierOnAction(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(this.getClass().getResource("/view/supplierForm.fxml"));
+        Parent root = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/AdminDash/supplierForm.fxml"));
         this.sidePane.getChildren().clear();
         this.sidePane.getChildren().add(root);
 
@@ -68,8 +68,8 @@ public class AdminFormController {
     }
 
     private void logout() throws IOException {
-        AnchorPane logout = null;
-        logout = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/loginForm.fxml"));
+        AnchorPane logout;
+        logout = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/Login/loginForm.fxml"));
         Scene scene = new Scene(logout);
         Stage stage = (Stage) root.getScene().getWindow();
         stage.setScene(scene);
@@ -81,7 +81,7 @@ public class AdminFormController {
 
     @FXML
     void vetOnAction(ActionEvent event) throws IOException {
-        Parent vetNode = FXMLLoader.load(this.getClass().getResource("/view/vetForm.fxml"));
+        Parent vetNode = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/AdminDash/vetForm.fxml"));
         this.sidePane.getChildren().clear();
         this.sidePane.getChildren().add(vetNode);
     }

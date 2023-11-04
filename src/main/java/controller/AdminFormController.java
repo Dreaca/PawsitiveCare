@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 
 import javax.naming.ldap.PagedResultsControl;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class AdminFormController {
     public AnchorPane sidePane;
@@ -24,11 +25,11 @@ public class AdminFormController {
     }
 
     @FXML
-    void employeeOnAction(ActionEvent event) throws IOException {
+    void employeeOnAction(ActionEvent event) throws IOException, SQLException {
         Parent vetNode = FXMLLoader.load(this.getClass().getResource("/view/ManageEmployee.fxml"));
         this.sidePane.getChildren().clear();
         this.sidePane.getChildren().add(vetNode);
-//        ManageEmployeeController.getEmployees();
+        ManageEmployeeController.getEmployees();
 
     }
 

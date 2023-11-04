@@ -5,13 +5,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class AdminFormController {
     public AnchorPane sidePane;
+    public AnchorPane root;
     @FXML
     private JFXButton btnEmployee;
 
@@ -50,7 +56,26 @@ public class AdminFormController {
     }
 
     @FXML
-    void userBtnOnAction(ActionEvent event) {
+    void userBtnOnAction(ActionEvent event) throws IOException {
+        Alert logout = new Alert(Alert.AlertType.CONFIRMATION);
+        logout.setTitle("Confirmation");
+        logout.setContentText("Are you sure to logout from the system? ");
+        logout.getButtonTypes().setAll(ButtonType.YES,ButtonType.CANCEL);
+        Optional<ButtonType> result = logout.showAndWait();
+        if (result.isPresent()&&result.get() == ButtonType.YES){
+            logout();
+        }
+    }
+
+    private void logout() throws IOException {
+        AnchorPane logout = null;
+        logout = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/loginForm.fxml"));
+        Scene scene = new Scene(logout);
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.setTitle("Login");
+        stage.show();
 
     }
 

@@ -19,8 +19,10 @@ public class AdminFormController {
     private JFXButton btnUser;
 
     @FXML
-    void customerOnAction(ActionEvent event) {
-
+    void customerOnAction(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(this.getClass().getResource("/view/customerForm.fxml"));
+        this.sidePane.getChildren().clear();
+        this.sidePane.getChildren().add(root);
     }
 
     @FXML
@@ -32,12 +34,18 @@ public class AdminFormController {
     }
 
     @FXML
-    void reportOnAction(ActionEvent event) {
+    void reportOnAction(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(this.getClass().getResource("/view/reportForm.fxml"));
+        this.sidePane.getChildren().clear();
+        this.sidePane.getChildren().add(root);
 
     }
 
     @FXML
-    void supplierOnAction(ActionEvent event) {
+    void supplierOnAction(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(this.getClass().getResource("/view/supplierForm.fxml"));
+        this.sidePane.getChildren().clear();
+        this.sidePane.getChildren().add(root);
 
     }
 

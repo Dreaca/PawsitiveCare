@@ -12,7 +12,7 @@ public class Appinitializer extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/view/dashBoards/Login/loginForm.fxml"))));
+        stage.setScene(new Scene(FXMLLoader.load(this.getClass().getResource("/view/dashBoards/common/loginForm.fxml"))));
         stage.centerOnScreen();
         stage.setTitle("Login");
         stage.show();

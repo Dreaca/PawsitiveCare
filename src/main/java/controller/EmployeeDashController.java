@@ -38,7 +38,7 @@ public class EmployeeDashController {
 
     private void logout() throws IOException {
         AnchorPane logout;
-        logout = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/Login/loginForm.fxml"));
+        logout = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/common/loginForm.fxml"));
         Scene scene = new Scene(logout);
         Stage stage = (Stage) root.getScene().getWindow();
         stage.setScene(scene);
@@ -58,7 +58,7 @@ public class EmployeeDashController {
 
     @FXML
     void customerOnAction(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/EmployeeDash/Customer.fxml"));
+        Parent parent = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/common/customerForm.fxml"));
         this.sidePane.getChildren().clear();
         this.sidePane.getChildren().add(parent);
     }
@@ -69,7 +69,6 @@ public class EmployeeDashController {
         this.sidePane.getChildren().clear();
         this.sidePane.getChildren().add(parent);
     }
-
     @FXML
     void petOnAction(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/EmployeeDash/petForm.fxml"));

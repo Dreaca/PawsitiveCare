@@ -14,7 +14,7 @@
       <TextField fx:id="txtCustomerID" layoutX="87.0" layoutY="39.0" onAction="#customerSearchOnaction" prefHeight="39.0" prefWidth="250.0" promptText="Customer Id " />
       <TextField fx:id="txtCustomerFname" layoutX="400.0" layoutY="39.0" onAction="#txtCustomerFnameSearch" prefHeight="39.0" prefWidth="250.0" promptText="First Name" />
       <TextField fx:id="txtCustomerLname" layoutX="712.0" layoutY="38.0" onAction="#customerLnameSearchOnAction" prefHeight="39.0" prefWidth="250.0" promptText="Last Name" />
-      <TextField layoutX="87.0" layoutY="102.0" prefHeight="39.0" prefWidth="874.0" promptText="Address" />
+      <TextField fx:id="txtCusAddress" layoutX="87.0" layoutY="102.0" prefHeight="39.0" prefWidth="874.0" promptText="Address" />
       <TextField fx:id="txtContactNo" layoutX="85.0" layoutY="162.0" onAction="#customerContactSearch" prefHeight="39.0" prefWidth="250.0" promptText="Contact No ." />
       <TextField fx:id="txtContact2nd" disable="true" layoutX="712.0" layoutY="159.0" prefHeight="39.0" prefWidth="250.0" promptText="Contact No ." />
       <RadioButton fx:id="rdbtnCustomer2ndNum" layoutX="387.0" layoutY="162.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="287.0" text="Have a 2nd Number">

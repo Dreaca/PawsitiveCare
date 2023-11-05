@@ -1,90 +1,25 @@
 package model;
 
 import Db.DbConnection;
+import Dto.ContactDto;
 import Dto.CustomerDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerModel {
-    private String customerId;
-    private String customerName;
-    private String customerAddress;
-    private String customerContact;
-    private  String customerContact2;
-
-    public String getCustomerContact2() {
-        return customerContact2;
-    }
-
-    public void setCustomerContact2(String customerContact2) {
-        this.customerContact2 = customerContact2;
-    }
-
-    @Override
-    public String toString() {
-        return "CustomerModel{" +
-                "customerId='" + customerId + '\'' +
-                ", customerName='" + customerName + '\'' +
-                ", customerAddress='" + customerAddress + '\'' +
-                ", customerContact='" + customerContact + '\'' +
-                ", customerContact2='" + customerContact2 + '\'' +
-                '}';
-    }
-
-    public CustomerModel(String customerId, String customerName, String customerAddress, String customerContact, String customerContact2) {
-        this.customerId = customerId;
-        this.customerName = customerName;
-        this.customerAddress = customerAddress;
-        this.customerContact = customerContact;
-        this.customerContact2 = customerContact2;
-    }
 
     public CustomerModel() {
     }
 
-    public CustomerModel(String customerId, String customerName, String customerAddress, String customerContact) {
-        this.customerId = customerId;
-        this.customerName = customerName;
-        this.customerAddress = customerAddress;
-        this.customerContact = customerContact;
-    }
 
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public String getCustomerAddress() {
-        return customerAddress;
-    }
-
-    public void setCustomerAddress(String customerAddress) {
-        this.customerAddress = customerAddress;
-    }
-
-    public String getCustomerContact() {
-        return customerContact;
-    }
-
-    public void setCustomerContact(String customerContact) {
-        this.customerContact = customerContact;
-    }
 
     public boolean saveCustomer(CustomerDto dto) throws SQLException {
-        boolean flag = false;
+        boolean flag;
         String sql = "INSERT INTO customer VALUES(?,?,?)";
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pstm = connection.prepareStatement(sql);
@@ -93,11 +28,7 @@ public class CustomerModel {
         pstm.setString(3,dto.getCustomerAddress());
         int i = pstm.executeUpdate();
         saveCustomerContact(dto);
-        if(i > 0){
-            flag = true;
-
-        }
-        else flag = false;
+        flag = i > 0;
         return flag;
     }
 
@@ -114,23 +45,107 @@ public class CustomerModel {
     }
 
     public boolean deleteCustomer(String id) throws SQLException {
-        Connection connection = null;
-        try {
-            connection = DbConnection.getInstance().getConnection();
-            connection.setAutoCommit(false);
-            boolean contactDeleted = ContactModel.deleteContact(id);
-            if(contactDeleted){
+        Connection connection = DbConnection.getInstance().getConnection();
                 String sql = "DELETE FROM customer WHERE custId = ?";
                 PreparedStatement pstm = connection.prepareStatement(sql);
                 pstm.setString(1,id);
-                pstm.executeUpdate();
-                connection.commit();
-            }
-        } catch (SQLException e) {
-            connection.rollback();
-        } finally {
-            connection.setAutoCommit(true);
+                int i = pstm.executeUpdate();
+                return i > 0;
+    }
+
+    public CustomerDto searchCustomer(String id) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        String sql = "SELECT * FROM customer WHERE custId = ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setString(1,id);
+        ResultSet resultSet = pstm.executeQuery();
+        CustomerDto dto = null;
+        if(resultSet.next()){
+            String custId = resultSet.getNString("custId");
+            String name = resultSet.getString("name");
+            String address = resultSet.getString("Address");
+            String contact = ContactModel.getContact(custId);
+
+            dto = new CustomerDto(custId,name,address,contact);
         }
-        return true;
+        return dto;
+
+    }
+
+    public CustomerDto searchCustomerByFname(String fname) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        String sql = "SELECT * FROM customer WHERE name LIKE ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setString(1,fname+"%");
+        ResultSet resultSet = pstm.executeQuery();
+        CustomerDto dto = null;
+        if(resultSet.next()){
+            String custId = resultSet.getNString("custId");
+            String name = resultSet.getString("name");
+            String address = resultSet.getString("Address");
+            String contact = ContactModel.getContact(custId);
+
+            dto = new CustomerDto(custId,name,address,contact);
+        }
+        return dto;
+    }
+    public CustomerDto searchCustomerByLname(String Lname) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        String sql = "SELECT * FROM customer WHERE name LIKE ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setString(1,"% "+Lname);
+        ResultSet resultSet = pstm.executeQuery();
+        CustomerDto dto = null;
+        if(resultSet.next()){
+            String custId = resultSet.getNString("custId");
+            String name = resultSet.getString("name");
+            String address = resultSet.getString("Address");
+            String contact = ContactModel.getContact(custId);
+
+            dto = new CustomerDto(custId,name,address,contact);
+        }
+        return dto;
+    }
+
+    public CustomerDto searchCustomerByContact(String contact) throws SQLException {
+        ContactDto conDto = ContactModel.getCustomer(contact);
+        String custId = conDto.getUserId();
+        Connection connection = DbConnection.getInstance().getConnection();
+        String sql = "SELECT * FROM customer WHERE custId = ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setString(1,custId);
+        ResultSet resultSet = pstm.executeQuery();
+        CustomerDto dto = null;
+        if(resultSet.next()){
+            String name = resultSet.getString("name");
+            String address = resultSet.getString("Address");
+            dto = new CustomerDto(custId,name,address,contact);
+        }
+        return dto;
+
+    }
+
+    public List<CustomerDto> getAllCustomer() throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+
+        String sql = "SELECT * FROM customer";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        ResultSet resultSet = pstm.executeQuery();
+
+        ArrayList<CustomerDto> dto = new ArrayList<>();
+
+        while (resultSet.next()){
+            String Contact = ContactModel.getContact(resultSet.getString("custId"));
+            dto.add(
+              new CustomerDto(
+                      resultSet.getString(1),
+                      resultSet.getString(2),
+                      resultSet.getString(3),
+                      Contact,
+                      null
+              )
+            );
+        }
+        return dto;
     }
 }

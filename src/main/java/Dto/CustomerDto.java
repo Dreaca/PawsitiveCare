@@ -78,4 +78,7 @@ public class CustomerDto {
         this.customerContact = customerContact;
     }
 
+    public String getCustomerPet() {
+        return null;
+    }
 }

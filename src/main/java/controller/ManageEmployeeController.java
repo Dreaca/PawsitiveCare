@@ -29,6 +29,11 @@ public class ManageEmployeeController {
 
     public void initialize() throws IOException, SQLException {
 
+        loadAllEmployees();
+
+    }
+
+    public void loadAllEmployees() throws SQLException, IOException {
         List<EmployeeDto> employeeDtos= EmployeeModel.getEmployeeDtos();
         for (EmployeeDto empDto:employeeDtos) {
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/employeeManage/EmployeeTile.fxml"));
@@ -37,10 +42,9 @@ public class ManageEmployeeController {
             controller.setEmployeeData(empDto);
             this.employeeCard.getChildren().clear();
             this.employeeCard.getChildren().add(tile);
-            
+
         }
     }
-
 
     public void addnewEmployee(ActionEvent actionEvent) {
 

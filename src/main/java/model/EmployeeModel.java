@@ -2,7 +2,6 @@ package model;
 
 import Db.DbConnection;
 import Dto.EmployeeDto;
-import controller.EmployeeTileController;
 import javafx.scene.image.Image;
 
 import java.io.ByteArrayInputStream;
@@ -14,24 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeModel {
-    private String empId;
-    private String name;
-    private String address;
     private String contact;
 
-    private double salary;
-    private  String userId;
     private static Image photo;
-
-    public EmployeeModel(String empId, String name, String address, String contact, double salary, String userId, Image photo) {
-        this.empId = empId;
-        this.name = name;
-        this.address = address;
-        this.contact = contact;
-        this.salary = salary;
-        this.userId = userId;
-        this.photo = photo;
-    }
 
     public EmployeeModel() {
     }
@@ -42,7 +26,7 @@ public class EmployeeModel {
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pstm = connection.prepareStatement(sql);
         ResultSet resultSet = pstm.executeQuery();
-        while (resultSet.next()){
+        while (resultSet.next()) {
             EmployeeDto emp = new EmployeeDto();
             emp.setEmpId(resultSet.getString("employeeId"));
             emp.setAddress(resultSet.getString("address"));
@@ -51,7 +35,7 @@ public class EmployeeModel {
             emp.setSalary(resultSet.getDouble("salary"));
             emp.setUserId(resultSet.getString("userId"));
             byte[] photobyte = resultSet.getBytes("photo");
-            if (photobyte != null){
+            if (photobyte != null) {
                 ByteArrayInputStream bt = new ByteArrayInputStream(photobyte);
                 photo = new Image(bt);
                 emp.setPhoto(photo);
@@ -64,29 +48,6 @@ public class EmployeeModel {
         return null;
     }
 
-    public String getEmpId() {
-        return empId;
-    }
-
-    public void setEmpId(String empId) {
-        this.empId = empId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public String getContact() {
         return contact;
@@ -96,27 +57,4 @@ public class EmployeeModel {
         this.contact = contact;
     }
 
-    public double getSalary() {
-        return salary;
-    }
-
-    public void setSalary(double salary) {
-        this.salary = salary;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public Image getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(Image photo) {
-        this.photo = photo;
-    }
 }

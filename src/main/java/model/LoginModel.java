@@ -17,6 +17,29 @@ public class LoginModel {
     public LoginModel() {
     }
 
+    public static String generateNExtUserID() throws SQLException {
+        String sql = "SELECT * FROM user ORDER BY userId DESC LIMIT 1";
+        Connection connection =DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        ResultSet resultSet = pstm.executeQuery();
+        if(resultSet.next()){
+            return splitUserID(resultSet.getString(1));
+        }else {
+            return splitUserID(null);
+        }
+    }
+
+    private static String splitUserID(String userId) {
+        if(userId != null){
+            String newUser[] = userId.split("U");
+            int num = Integer.parseInt(newUser[1]);
+            num++;
+            return "E00"+num;
+        }else {
+            return "E001";
+        }
+    }
+
     public void setUserName(String userName) {
         this.userName = userName;
     }

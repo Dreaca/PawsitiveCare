@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="root" prefHeight="117.0" prefWidth="776.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddNewItemController">
+   <children>
+      <Label layoutX="24.0" layoutY="21.0" text="Item Id : ">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblItemCode" layoutX="126.0" layoutY="22.0" text="I001">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtDescription" layoutX="24.0" layoutY="60.0" prefHeight="33.0" prefWidth="271.0" promptText="Description" />
+      <TextField fx:id="txtQtO" layoutX="301.0" layoutY="60.0" prefHeight="33.0" prefWidth="146.0" promptText="Quantaty On Hand" />
+      <TextField fx:id="txtUnitPrice" layoutX="460.0" layoutY="60.0" prefHeight="33.0" prefWidth="146.0" promptText="Unit Price" />
+      <JFXButton buttonType="RAISED" cancelButton="true" layoutX="622.0" layoutY="65.0" onAction="#cancelOnAction" text="Cancel" />
+      <JFXButton buttonType="RAISED" layoutX="700.0" layoutY="65.0" onAction="#saveOnAction" text="Save" />
+   </children>
+</AnchorPane>

@@ -11,8 +11,9 @@
             <JFXButton fx:id="btnEmployee" buttonType="RAISED" layoutX="14.0" layoutY="90.0" onAction="#employeeOnAction" prefHeight="46.0" prefWidth="264.0" style="-fx-background-color: white; -fx-background-radius: 11;" text="Manage Users and Employees" />
             <JFXButton buttonType="RAISED" layoutX="14.0" layoutY="215.0" onAction="#vetOnAction" prefHeight="46.0" prefWidth="264.0" style="-fx-background-color: white; -fx-background-radius: 11;" text="Veterinaries" />
             <JFXButton buttonType="RAISED" layoutX="16.0" layoutY="154.0" onAction="#customerOnAction" prefHeight="44.0" prefWidth="260.0" style="-fx-background-color: white; -fx-background-radius: 11;" text="Customer" />
-            <JFXButton buttonType="RAISED" layoutX="12.0" layoutY="340.0" onAction="#reportOnAction" prefHeight="46.0" prefWidth="264.0" style="-fx-background-color: white; -fx-background-radius: 11;" text="Reports" />
-            <JFXButton buttonType="RAISED" layoutX="14.0" layoutY="278.0" onAction="#supplierOnAction" prefHeight="46.0" prefWidth="264.0" style="-fx-background-color: white; -fx-background-radius: 11;" text="Supplier" />
+            <JFXButton buttonType="RAISED" layoutX="12.0" layoutY="392.0" onAction="#reportOnAction" prefHeight="46.0" prefWidth="264.0" style="-fx-background-color: white; -fx-background-radius: 11;" text="Reports" />
+            <JFXButton buttonType="RAISED" layoutX="14.0" layoutY="331.0" onAction="#supplierOnAction" prefHeight="46.0" prefWidth="264.0" style="-fx-background-color: white; -fx-background-radius: 11;" text="Supplier" />
+            <JFXButton buttonType="RAISED" layoutX="15.0" layoutY="271.0" onAction="#manageStockOnAction" prefHeight="46.0" prefWidth="264.0" style="-fx-background-color: white; -fx-background-radius: 11;" text="Manage Stock" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="sidePane" layoutX="315.0" layoutY="10.0" prefHeight="749.0" prefWidth="1035.0" style="-fx-background-color: grey;" />

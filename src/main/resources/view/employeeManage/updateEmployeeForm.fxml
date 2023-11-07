@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.UpdateEmployeeFormController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="493.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateEmployeeFormController">
+   <children>
+      <Label layoutX="243.0" layoutY="6.0" text="Update Employee" />
+      <ComboBox layoutX="28.0" layoutY="229.0" prefHeight="33.0" prefWidth="255.0" promptText="Employee ID" />
+      <TextField layoutX="316.0" layoutY="229.0" prefHeight="33.0" prefWidth="255.0" promptText="Employee First Name" />
+      <TextField layoutX="28.0" layoutY="283.0" prefHeight="33.0" prefWidth="255.0" promptText="Employee Last Name" />
+      <TextField layoutX="316.0" layoutY="283.0" prefHeight="33.0" prefWidth="255.0" promptText="Address" />
+      <TextField layoutX="29.0" layoutY="336.0" prefHeight="33.0" prefWidth="255.0" promptText="Contact" />
+      <TextField layoutX="316.0" layoutY="336.0" prefHeight="33.0" prefWidth="255.0" promptText="Salary" />
+      <TextField layoutX="30.0" layoutY="383.0" prefHeight="33.0" prefWidth="255.0" promptText="User Name" />
+      <TextField layoutX="316.0" layoutY="383.0" prefHeight="33.0" prefWidth="255.0" promptText="Password" />
+      <AnchorPane layoutX="231.0" layoutY="53.0" prefHeight="144.0" prefWidth="139.0" style="-fx-border-color: black;" />
+      <JFXButton buttonType="RAISED" layoutX="455.0" layoutY="426.0" prefHeight="33.0" prefWidth="116.0" style="-fx-background-color: white;" text="Update" />
+      <JFXButton buttonType="RAISED" layoutX="328.0" layoutY="426.0" prefHeight="33.0" prefWidth="116.0" style="-fx-background-color: white;" text="Cancel" />
+   </children>
 </AnchorPane>

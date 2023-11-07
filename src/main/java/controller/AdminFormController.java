@@ -86,4 +86,9 @@ public class AdminFormController {
         this.sidePane.getChildren().add(vetNode);
     }
 
+    public void manageStockOnAction(ActionEvent actionEvent) throws IOException {
+        Parent stock = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/AdminDash/manageItemForm.fxml"));
+        this.sidePane.getChildren().clear();
+        this.sidePane.getChildren().add(stock);
+    }
 }

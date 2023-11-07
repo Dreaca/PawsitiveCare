@@ -50,14 +50,26 @@ public class EmployeeDashController {
 
     @FXML
     void appointmentsOnAction(ActionEvent event) throws IOException {
+        changeButtonColor(btnAppointments);
         Parent parent = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/EmployeeDash/appointmentsForm.fxml"));
         this.sidePane.getChildren().clear();
         this.sidePane.getChildren().add(parent);
 
     }
 
+    private void changeButtonColor(JFXButton btn) {
+        JFXButton[] buttons = {btnAppointments,btnCustomer,btnOrders,btnPets,btnSchedule};
+        for (int i = 0; i < buttons.length; i++) {
+            btn.setStyle("-fx-background-color : ffbe4f;");
+            if(!btn.equals(buttons[i])) {
+                buttons[i].setStyle("-fx-background-color : white;");
+            }
+        }
+    }
+
     @FXML
     void customerOnAction(ActionEvent event) throws IOException {
+        changeButtonColor(btnCustomer);
         Parent parent = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/common/customerForm.fxml"));
         this.sidePane.getChildren().clear();
         this.sidePane.getChildren().add(parent);
@@ -65,20 +77,23 @@ public class EmployeeDashController {
 
     @FXML
     void ordersOnAction(ActionEvent event) throws IOException {
+        changeButtonColor(btnOrders);
         Parent parent = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/EmployeeDash/orderForm.fxml"));
         this.sidePane.getChildren().clear();
         this.sidePane.getChildren().add(parent);
     }
     @FXML
     void petOnAction(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/EmployeeDash/petForm.fxml"));
+        changeButtonColor(btnPets);
+        Parent parent = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/pets/petForm.fxml"));
         this.sidePane.getChildren().clear();
         this.sidePane.getChildren().add(parent);
     }
 
     @FXML
     void scheduleOnAction(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/EmployeeDash/petForm.fxml"));
+        changeButtonColor(btnSchedule);
+        Parent parent = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/EmployeeDash/scheduleForm.fxml"));
         this.sidePane.getChildren().clear();
         this.sidePane.getChildren().add(parent);
     }

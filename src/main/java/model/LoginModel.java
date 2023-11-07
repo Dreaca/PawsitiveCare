@@ -10,10 +10,6 @@ import java.sql.SQLException;
 
 public class LoginModel {
 
-    private static String userName;
-    private static String passWord;
-    private String userId;
-
     public LoginModel() {
     }
 
@@ -31,7 +27,7 @@ public class LoginModel {
 
     private static String splitUserID(String userId) {
         if(userId != null){
-            String newUser[] = userId.split("U");
+            String [] newUser = userId.split("E");
             int num = Integer.parseInt(newUser[1]);
             num++;
             return "E00"+num;
@@ -40,35 +36,6 @@ public class LoginModel {
         }
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public String getPassWord() {
-        return passWord;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public LoginModel(String userName, String passWord, String userId) {
-        this.userName = userName;
-        this.passWord = passWord;
-        this.userId = userId;
-    }
 
 
     public static boolean authenticate(LoginFormDto login) throws SQLException {
@@ -108,5 +75,29 @@ public class LoginModel {
         }
 
         return null;
+    }
+
+    public static boolean deleteUser(String userId) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("DELETE FROM user WHERE userId = ?");
+        pstm.setString(1,userId);
+        int i = pstm.executeUpdate();
+        return i > 0;
+    }
+
+    public boolean saveUser(LoginFormDto LDto) throws SQLException {
+
+        String sql = "INSERT INTO user VALUES (?,?,?)";
+
+        Connection connection = DbConnection.getInstance().getConnection();
+
+        PreparedStatement pstm = connection.prepareStatement(sql);
+
+        pstm.setString(1,LDto.getUserID());
+        pstm.setString(2,LDto.getUserName());
+        pstm.setString(3,LDto.getPassword());
+        int i = pstm.executeUpdate();
+
+        return i > 0;
     }
 }

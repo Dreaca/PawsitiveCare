@@ -8,20 +8,22 @@
 
 <AnchorPane fx:id="root" prefHeight="749.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VetFormController">
    <children>
-      <TextField fx:id="txtLastName" layoutX="195.0" layoutY="127.0" prefHeight="41.0" prefWidth="241.0" promptText="Last Name" />
-      <TextField fx:id="txtFirstName" layoutX="644.0" layoutY="34.0" prefHeight="41.0" prefWidth="241.0" promptText="First Name" />
-      <TextField fx:id="txtContact" layoutX="644.0" layoutY="123.0" prefHeight="41.0" prefWidth="241.0" promptText="Contact" />
-      <TableView layoutX="22.0" layoutY="308.0" prefHeight="200.0" prefWidth="1000.0">
+      <TextField fx:id="txtLastName" layoutX="59.0" layoutY="107.0" prefHeight="41.0" prefWidth="377.0" promptText="Last Name" />
+      <TextField fx:id="txtFirstName" layoutX="479.0" layoutY="34.0" prefHeight="41.0" prefWidth="406.0" promptText="First Name" />
+      <TextField fx:id="txtContact" layoutX="477.0" layoutY="105.0" prefHeight="41.0" prefWidth="408.0" promptText="Contact" />
+      <TableView fx:id="tblVet" layoutX="22.0" layoutY="308.0" prefHeight="260.0" prefWidth="1000.0">
         <columns>
-          <TableColumn fx:id="tblColVetId" prefWidth="144.0" text="VetID" />
-          <TableColumn fx:id="tblColName" prefWidth="458.6666259765625" text="Name" />
-            <TableColumn fx:id="tblColContact" prefWidth="247.0" text="Contact" />
-            <TableColumn fx:id="tblColSchedule" prefWidth="152.0" text="Schedule" />
+          <TableColumn fx:id="tblColVetId" prefWidth="92.0" text="VetID" />
+          <TableColumn fx:id="tblColName" prefWidth="278.3333435058594" text="Name" />
+            <TableColumn fx:id="tblColContact" prefWidth="120.0" text="Contact" />
+            <TableColumn fx:id="colEmail" prefWidth="370.33331298828125" text="Email" />
+            <TableColumn fx:id="tblColSchedule" prefWidth="137.66668701171875" text="Schedule" />
         </columns>
       </TableView>
       <JFXButton fx:id="btnClear" buttonType="RAISED" layoutX="605.0" layoutY="247.0" onAction="#clearOnAction" prefHeight="55.0" prefWidth="108.0" style="-fx-background-color: yellow;" text="Clear" />
-      <JFXButton buttonType="RAISED" layoutX="729.0" layoutY="246.0" prefHeight="54.0" prefWidth="124.0" style="-fx-background-color: red;" text="Delete" />
-      <JFXButton buttonType="RAISED" layoutX="866.0" layoutY="244.0" prefHeight="54.0" prefWidth="124.0" style="-fx-background-color: lime;" text="Save" />
-      <TextField fx:id="txtID" layoutX="194.0" layoutY="33.0" prefHeight="41.0" prefWidth="241.0" promptText="Id" />
+      <JFXButton buttonType="RAISED" layoutX="729.0" layoutY="246.0" onAction="#deleteOnAction" prefHeight="54.0" prefWidth="124.0" style="-fx-background-color: red;" text="Delete" />
+      <JFXButton buttonType="RAISED" layoutX="866.0" layoutY="244.0" onAction="#saveOnAction" prefHeight="54.0" prefWidth="124.0" style="-fx-background-color: lime;" text="Save" />
+      <TextField fx:id="txtID" layoutX="62.0" layoutY="33.0" prefHeight="41.0" prefWidth="373.0" promptText="Id" onAction="#searchVetOnAction"/>
+      <TextField fx:id="txtEmail" layoutX="57.0" layoutY="174.0" prefHeight="41.0" prefWidth="828.0" promptText="Email" />
    </children>
 </AnchorPane>

@@ -22,31 +22,33 @@ public class EmployeeModel {
     }
 
     public static List<EmployeeDto> getEmployeeDtos() throws SQLException {
-        List<EmployeeDto> employeeDtos = new ArrayList<>();
-        String sql = "SELECT * FROM employee";
-        Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        ResultSet resultSet = pstm.executeQuery();
-        while (resultSet.next()){
-            EmployeeDto emp = new EmployeeDto();
-            emp.setEmpId(resultSet.getString("employeeId"));
-            emp.setAddress(resultSet.getString("address"));
-            emp.setName(resultSet.getString("name"));
-            emp.setContact(resultSet.getString("contact"));
-            emp.setSalary(resultSet.getDouble("salary"));
-            emp.setUserId(resultSet.getString("userId"));
-            byte[] photobyte = resultSet.getBytes("photo");
-            if (photobyte != null){
-                ByteArrayInputStream bt = new ByteArrayInputStream(photobyte);
-                photo = new Image(bt);
-                emp.setPhoto(photo);
-            }
-            employeeDtos.add(emp);
-            resultSet.close();
-            return employeeDtos;
-        }
 
-        return null;
+
+
+        String sql = "SELECT * FROM employee";
+
+        Connection connection = DbConnection.getInstance().getConnection();
+
+        PreparedStatement pstm = connection.prepareStatement(sql);
+
+        ResultSet resultSet = pstm.executeQuery();
+
+        ArrayList<EmployeeDto> employeeDtos = new ArrayList<>();
+
+        while (resultSet.next()){
+            employeeDtos.add(
+             new EmployeeDto(
+                    resultSet.getString("employeeId"),
+                    resultSet.getString("address"),
+                    resultSet.getString("name"),
+                    resultSet.getString("contact"),
+                    resultSet.getDouble("salary"),
+                    resultSet.getString("userId")
+             )
+            );
+
+        }
+        return employeeDtos;
     }
 
     public static String generateNextEmpId() throws SQLException {
@@ -66,9 +68,47 @@ public class EmployeeModel {
             String [] id = empId.split("E");
             int num = Integer.parseInt(id[1]);
             num++;
-            return "E0"+num;
+            return "E00"+num;
         }else {
             return "E001";
+        }
+    }
+
+    public static boolean  deleteEmployee(String empId) throws SQLException {
+        boolean flag = false;
+        Connection connection = DbConnection.getInstance().getConnection();;
+        try {
+            connection.setAutoCommit(false);
+
+            String userId = EmployeeModel.getEmployee(empId);
+            PreparedStatement pstm = connection.prepareStatement("DELETE FROM employee WHERE employeeId = ?");
+            pstm.setString(1,empId);
+            int i = pstm.executeUpdate();
+            if(i > 0){
+                boolean b = LoginModel.deleteUser(userId);
+                if (b) {
+                    flag = b;
+                    connection.commit();
+                }
+            }
+        } catch (SQLException e) {
+            connection.rollback();
+        }
+        finally {
+            connection.setAutoCommit(true);
+        }
+        return flag;
+    }
+
+    private static String getEmployee(String empId) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT userId FROM employee WHERE employeeId = ?");
+        pstm.setString(1,empId);
+        ResultSet resultSet = pstm.executeQuery();
+        if (resultSet.next()){
+            return resultSet.getString("userId");
+        }else {
+            return null;
         }
     }
 
@@ -80,14 +120,6 @@ public class EmployeeModel {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getContact() {
         return contact;
     }
@@ -96,35 +128,12 @@ public class EmployeeModel {
         this.contact = contact;
     }
 
-    public double getSalary() {
-        return salary;
-    }
-
-    public void setSalary(double salary) {
-        this.salary = salary;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public Image getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(Image photo) {
-        this.photo = photo;
-    }
-
     public boolean saveEmployee(EmployeeDto dto) throws SQLException {
         String sql = "INSERT INTO employee VALUES(?,?,?,?,?,?,?)";
 
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pstm = connection.prepareStatement(sql);
+
         pstm.setString(1,dto.getEmpId());
         pstm.setString(2,dto.getName());
         pstm.setString(3,dto.getAddress());
@@ -132,6 +141,7 @@ public class EmployeeModel {
         pstm.setDouble(5,dto.getSalary());
         pstm.setString(6,dto.getUserId());
         pstm.setBlob(7, (Blob) null);
+
         int i = pstm.executeUpdate();
         return i > 0;
     }

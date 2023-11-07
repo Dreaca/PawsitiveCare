@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane fx:id="root" prefHeight="181.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateItemFormController">
+   <children>
+      <ComboBox fx:id="cmbItemCode" layoutX="14.0" layoutY="34.0" prefHeight="31.0" prefWidth="222.0" promptText="Item Code" />
+      <TextField fx:id="description" layoutX="278.0" layoutY="34.0" prefHeight="31.0" prefWidth="296.0" promptText="Description" />
+      <TextField fx:id="txtQTO" layoutX="14.0" layoutY="87.0" prefHeight="31.0" prefWidth="222.0" promptText="Qty On Hand" />
+      <TextField fx:id="txtUnitPrice" layoutX="278.0" layoutY="87.0" prefHeight="31.0" prefWidth="222.0" promptText="Unit Price" />
+      <JFXButton buttonType="RAISED" layoutX="395.0" layoutY="132.0" onAction="#cancelOnAction" prefHeight="37.0" prefWidth="91.0" text="Cancel" />
+      <JFXButton buttonType="RAISED" layoutX="486.0" layoutY="132.0" onAction="#saveUpdateOnAction" prefHeight="37.0" prefWidth="91.0" text="Save" />
+   </children>
+</AnchorPane>

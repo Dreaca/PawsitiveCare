@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.AppointmentsFormController"
-            prefHeight="749.0" prefWidth="1035.0">
 
+<AnchorPane prefHeight="749.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppointmentsFormController">
+   <children>
+      <Label layoutX="361.0" layoutY="13.0" text="Appointments">
+         <font>
+            <Font size="39.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tblAppointment" layoutX="31.0" layoutY="154.0" prefHeight="445.0" prefWidth="973.0">
+        <columns>
+          <TableColumn fx:id="colDate" prefWidth="168.3333282470703" text="Date" />
+          <TableColumn fx:id="colTime" prefWidth="110.66665649414062" text="Time " />
+            <TableColumn fx:id="colCustomer" prefWidth="236.33334350585938" text="Customer" />
+            <TableColumn fx:id="colContact" prefWidth="176.66668701171875" text="Contact" />
+            <TableColumn fx:id="colType" prefWidth="149.33331298828125" text="Type" />
+            <TableColumn fx:id="colPrice" prefWidth="128.66668701171875" text="Price" />
+        </columns>
+      </TableView>
+      <JFXButton buttonType="RAISED" layoutX="825.0" layoutY="83.0" prefHeight="51.0" prefWidth="175.0" style="-fx-background-color: green;" text="Add new appointment" onAction="#addNewAppointmentONAction"/>
+      <JFXButton buttonType="RAISED" layoutX="629.0" layoutY="83.0" prefHeight="51.0" prefWidth="175.0" style="-fx-background-color: green;" text="Clear Table" onAction="#clearTable" />
+   </children>
 </AnchorPane>

@@ -16,6 +16,11 @@ public class CustomerDto {
         this.customerContact2 = customerContact2;
     }
 
+    public CustomerDto(String customer, String contact) {
+        this.customerName = customer;
+        this.customerContact = contact;
+    }
+
     @Override
     public String toString() {
         return "CustomerDto{" +

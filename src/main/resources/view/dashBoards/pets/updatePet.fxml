@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" blendMode="DARKEN" prefHeight="522.0" prefWidth="374.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdatePetController">
+   <children>
+      <TextField fx:id="txtPetName" layoutX="37.0" layoutY="107.0" prefHeight="24.0" prefWidth="288.0" />
+      <Label layoutX="112.0" layoutY="5.0" prefHeight="16.0" prefWidth="143.0" text="Update Pet">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtOwner" layoutX="37.0" layoutY="265.0" prefHeight="24.0" prefWidth="288.0" />
+      <Label layoutX="38.0" layoutY="87.0" text="Pet Name" />
+      <ComboBox fx:id="cmbBreed" layoutX="37.0" layoutY="157.0" prefHeight="24.0" prefWidth="288.0" promptText="Breed" />
+      <Label layoutX="38.0" layoutY="138.0" text="Pet Breed" />
+      <ComboBox fx:id="cmbGender" layoutX="36.0" layoutY="209.0" prefHeight="24.0" prefWidth="288.0" promptText="Gender" />
+      <Label layoutX="38.0" layoutY="193.0" text="Pet Gender" />
+      <Label layoutX="38.0" layoutY="247.0" text="Pet Owner" />
+      <AnchorPane layoutX="24.0" layoutY="357.0" prefHeight="108.0" prefWidth="320.0" style="-fx-border-color: black;">
+         <children>
+            <Label layoutX="87.0" layoutY="46.0" text="Add new Records here" />
+         </children>
+         <effect>
+            <Glow />
+         </effect>
+      </AnchorPane>
+      <TextField fx:id="txtColor" layoutX="37.0" layoutY="313.0" prefHeight="24.0" prefWidth="288.0" />
+      <Label layoutX="38.0" layoutY="295.0" text="Color" />
+      <JFXButton layoutX="282.0" layoutY="476.0" onAction="#doneOnAction" text="Done" />
+      <JFXButton layoutX="213.0" layoutY="477.0" onAction="#cancelOnAction" text="Cancel" />
+      <Label layoutX="39.0" layoutY="47.0" prefHeight="41.0" prefWidth="64.0" text="PetID :">
+         <font>
+            <Font name="Khmer OS System" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblPetID" layoutX="106.0" layoutY="48.0" prefHeight="24.0" prefWidth="147.0" text="Ba">
+         <font>
+            <Font name="Khmer OS System" size="20.0" />
+         </font>
+      </Label>
+   </children>
+   <effect>
+      <DropShadow />
+   </effect>
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</AnchorPane>

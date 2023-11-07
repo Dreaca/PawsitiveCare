@@ -5,16 +5,18 @@ import Dto.LoginFormDto;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 import model.EmployeeModel;
 import model.LoginModel;
 
-import java.lang.invoke.StringConcatException;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class AddNewEmployeeFormController {
 
@@ -60,6 +62,12 @@ public class AddNewEmployeeFormController {
 
     @FXML
     private TextField txtUserName;
+    private Stage stage;
+    public static boolean savedEmployee = false;
+
+    public void setStage(Stage stage){
+        this.stage = stage;
+    }
 
     private EmployeeModel employeeModel = new EmployeeModel();
     private LoginModel logModel = new LoginModel();
@@ -70,7 +78,7 @@ public class AddNewEmployeeFormController {
 
     @FXML
     void btnCancelOnAction(ActionEvent event) {
-
+        ManageEmployeeController.stage.close();
     }
 
     @FXML
@@ -85,23 +93,52 @@ public class AddNewEmployeeFormController {
         String newPw = txtPassword.getText();
         String confPw = txtConfirmPass.getText();
 
-        var dto = new EmployeeDto(id,name,address,contact,salary,userId,null);
+
+        var dto = new EmployeeDto(id,name,address,contact,salary,userId);
+
         try {
-            boolean isSaved = employeeModel.saveEmployee(dto);
+            boolean con = confirmPass(newPw, confPw);
+            if(con){
+                var LDto = new LoginFormDto(userId,userName,newPw);
+                boolean userSaved = logModel.saveUser(LDto);
+
+                if(userSaved) {
+                    boolean isSaved = employeeModel.saveEmployee(dto);
+
+                    if (isSaved) {
+                        savedEmployee = isSaved;
+                        new Alert(Alert.AlertType.CONFIRMATION, "User Saved !").show();
+                    }
+                }
+            }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
         }
 
+    }
+
+    private boolean confirmPass(String newPw, String confPw) {
+        return Objects.equals(newPw, confPw);
     }
 
     @FXML
     void btnUploadOnAction(ActionEvent event) {
 
+
     }
 
     @FXML
     void onCheckPassWord(KeyEvent event) {
+        String newPassword = txtPassword.getText();
+        String confirmNewPassword = txtConfirmPass.getText();
 
+        if (newPassword.equals(confirmNewPassword)) {
+            //passwordMatchLabel.setText("Passwords match");
+            txtConfirmPass.setStyle("-fx-text-fill: green;");
+        } else {
+            //passwordMatchLabel.setText("Passwords do not match");
+            txtConfirmPass.setStyle("-fx-text-fill: red;");
+        }
     }
 
 }

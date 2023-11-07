@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.ScheduleFormController"
-            prefHeight="749.0" prefWidth="1035.0">
 
+<AnchorPane prefHeight="749.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ScheduleFormController">
+   <children>
+      <TableView layoutX="26.0" layoutY="100.0" prefHeight="525.0" prefWidth="979.0">
+        <columns>
+          <TableColumn prefWidth="148.3333282470703" text="Date" />
+          <TableColumn prefWidth="186.6666717529297" text="Day" />
+            <TableColumn prefWidth="138.66668701171875" text="Time" />
+            <TableColumn prefWidth="315.6666717529297" text="VetName" />
+            <TableColumn prefWidth="192.66665649414062" text="Duration" />
+        </columns>
+      </TableView>
+      <JFXButton layoutX="804.0" layoutY="636.0" prefHeight="40.0" prefWidth="199.0" text="Print Schedule" />
+      <JFXButton layoutX="626.0" layoutY="638.0" prefHeight="40.0" prefWidth="199.0" text="Mail to vets" />
+      <Label layoutX="418.0" layoutY="6.0" text="Schedule">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Label>
+      <JFXButton layoutX="695.0" layoutY="59.0" text="Update Schedule" />
+      <JFXButton layoutX="834.0" layoutY="59.0" text="Add new schdule Item" />
+   </children>
 </AnchorPane>

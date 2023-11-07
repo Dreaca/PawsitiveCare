@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="363.0" prefWidth="353.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EmployeeTileController">
+<AnchorPane prefHeight="300.0" prefWidth="150.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EmployeeTileController">
    <children>
       <ImageView fx:id="imgEmpImg" fitHeight="150.0" fitWidth="119.0" layoutX="106.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="lblEmpName" layoutX="148.0" layoutY="182.0" text="Label" />
@@ -14,5 +14,6 @@
       <Label fx:id="lblContact" layoutX="147.0" layoutY="253.0" text="Label" />
       <Label fx:id="lblUserId" layoutX="147.0" layoutY="273.0" text="Label" />
       <Label fx:id="lblSalary" layoutX="147.0" layoutY="291.0" text="Label" />
+      <JFXButton buttonType="RAISED" layoutX="267.0" layoutY="325.0" onAction="#deleteOnAction" text="Delete" />
    </children>
 </AnchorPane>

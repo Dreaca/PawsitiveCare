@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.SupplierFormController"
-            prefHeight="749.0" prefWidth="1035.0">
-
+<AnchorPane fx:id="root" prefHeight="749.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SupplierFormController">
+   <children>
+      <Label layoutX="435.0" layoutY="3.0" text="Supplier">
+         <font>
+            <Font size="37.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tblSupplier" layoutX="27.0" layoutY="319.0" prefHeight="385.0" prefWidth="980.0">
+        <columns>
+          <TableColumn fx:id="colSupplierId" prefWidth="95.0" text="SupplierID" />
+          <TableColumn fx:id="colSupName" prefWidth="155.0" text="Name" />
+            <TableColumn fx:id="coltype" prefWidth="221.0" text="type" />
+            <TableColumn fx:id="colContact" prefWidth="198.6666717529297" text="Contact" />
+            <TableColumn fx:id="colLocation" prefWidth="180.66665649414062" text="Location" />
+            <TableColumn fx:id="colInvoice" prefWidth="132.3333740234375" text="Invoice" />
+        </columns>
+      </TableView>
+      <TextField fx:id="txtSearch" layoutX="25.0" layoutY="79.0" prefHeight="41.0" prefWidth="840.0" promptText="Search" />
+      <JFXButton buttonType="RAISED" layoutX="663.0" layoutY="267.0" onAction="#addsupplierONAction" prefHeight="41.0" prefWidth="164.0" style="-fx-background-color: white;" text="Add new supplier +" />
+      <JFXButton buttonType="RAISED" layoutX="840.0" layoutY="268.0" onAction="#updateSupplierOnAction" prefHeight="41.0" prefWidth="164.0" style="-fx-background-color: white;" text="Update Supplier" />
+      <JFXButton buttonType="RAISED" layoutX="878.0" layoutY="77.0" onAction="#searchOnAction" prefHeight="41.0" prefWidth="115.0" style="-fx-background-color: white;" text="Search" />
+      <TextField fx:id="txtSupplierId" layoutX="25.0" layoutY="135.0" onAction="#searchSupplier" prefHeight="41.0" prefWidth="196.0" promptText="Supplier Id" />
+      <TextField fx:id="txtSupplierNAme" layoutX="255.0" layoutY="135.0" prefHeight="41.0" prefWidth="735.0" promptText="Name " />
+      <ComboBox fx:id="cmbType" layoutX="25.0" layoutY="196.0" prefHeight="43.0" prefWidth="198.0" promptText="Type" />
+      <TextField fx:id="txtLocation" layoutX="256.0" layoutY="198.0" prefHeight="41.0" prefWidth="475.0" promptText="Location" />
+      <TextField fx:id="txtContact" layoutX="753.0" layoutY="197.0" prefHeight="41.0" prefWidth="236.0" promptText="Contact" />
+   </children>
 </AnchorPane>

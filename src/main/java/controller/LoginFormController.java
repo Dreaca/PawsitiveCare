@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -19,9 +20,15 @@ public class LoginFormController {
     public JFXButton btnLogin;
     public PasswordField txtPassword;
     public AnchorPane root;
+    public AnchorPane stuff;
+    public Label incorrect;
 
+    public void initialize(){
+        incorrect.setVisible(false);
+    }
 
     public void loginOnAction(ActionEvent actionEvent) throws SQLException {
+
         String userName = txtUserNAme.getText();
         String password = txtPassword.getText();
 
@@ -38,7 +45,8 @@ public class LoginFormController {
             }
         }
         else {
-            System.out.println("Login Failed");}
+            incorrect.setVisible(true);
+            }
     }
 
     private void loadAdminDash() {

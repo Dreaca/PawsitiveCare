@@ -16,6 +16,38 @@ public class CustomerModel {
     public CustomerModel() {
     }
 
+    public static String getCustomerId(CustomerDto cus) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT custId FROM customer WHERE name = ?");
+        pstm.setString(1,cus.getCustomerName());
+        ResultSet resultSet = pstm.executeQuery();
+        if (resultSet.next()){
+            return resultSet.getString("custId");
+        }
+        else return null;
+    }
+
+    public static String getCustomerName(String custId) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT name FROM customer WHERE custId = ?");
+        pstm.setString(1,custId);
+        ResultSet resultSet = pstm.executeQuery();
+        if(resultSet.next()){
+            return resultSet.getString("name");
+        }
+        else return "Not registered";
+    }
+
+    public static String getCustomerId(String text) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT custId FROM customer WHERE name = ?");
+        pstm.setString(1,text);
+        ResultSet resultSet = pstm.executeQuery();
+        if (resultSet.next()){
+            return resultSet.getString(1);
+        }
+        else return "Not registered";
+    }
 
 
     public boolean saveCustomer(CustomerDto dto) throws SQLException {
@@ -147,5 +179,23 @@ public class CustomerModel {
             );
         }
         return dto;
+    }
+
+    public CustomerDto getCustomerDetail(String text) throws SQLException {
+            Connection connection = DbConnection.getInstance().getConnection();
+            PreparedStatement pstm = connection.prepareStatement("SELECT * FROM customer WHERE name = ?");
+            pstm.setString(1,text);
+            ResultSet resultSet = pstm.executeQuery();
+            if (resultSet.next()){
+                return new CustomerDto(
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        ContactModel.getContact(resultSet.getString(1)),
+                        null
+                );
+            }
+            return new CustomerDto("Not in System",null,"Not in System","Not in system");
+
     }
 }

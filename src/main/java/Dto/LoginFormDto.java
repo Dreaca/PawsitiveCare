@@ -9,7 +9,10 @@ public class LoginFormDto {
 
     private String userId;
 
-    public LoginFormDto() {
+    public LoginFormDto(String userId, String userName, String newPw) {
+        this.userId = userId;
+        this.userName = userName;
+        this.password = newPw;
     }
 
     public LoginFormDto(String userName, String password) {

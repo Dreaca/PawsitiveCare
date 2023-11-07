@@ -66,7 +66,7 @@ public class EmployeeModel {
             String [] id = empId.split("E");
             int num = Integer.parseInt(id[1]);
             num++;
-            return "E0"+num;
+            return "E00"+num;
         }else {
             return "E001";
         }
@@ -125,6 +125,7 @@ public class EmployeeModel {
 
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pstm = connection.prepareStatement(sql);
+
         pstm.setString(1,dto.getEmpId());
         pstm.setString(2,dto.getName());
         pstm.setString(3,dto.getAddress());
@@ -132,6 +133,7 @@ public class EmployeeModel {
         pstm.setDouble(5,dto.getSalary());
         pstm.setString(6,dto.getUserId());
         pstm.setBlob(7, (Blob) null);
+
         int i = pstm.executeUpdate();
         return i > 0;
     }

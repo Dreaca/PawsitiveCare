@@ -6,9 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import model.EmployeeModel;
 
 import java.io.IOException;
@@ -46,7 +48,13 @@ public class ManageEmployeeController {
         }
     }
 
-    public void addnewEmployee(ActionEvent actionEvent) {
+    public void addnewEmployee(ActionEvent actionEvent) throws IOException {
+
+        Parent root = FXMLLoader.load(this.getClass().getResource("/view/employeeManage/addNewEmployeeForm.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
 
 
     }

@@ -21,6 +21,7 @@ import java.util.Objects;
 public class AddNewEmployeeFormController {
 
     public Label lbluserID;
+    public TextField txtEmpNIC;
     @FXML
     private JFXButton btnCancel;
 
@@ -92,9 +93,10 @@ public class AddNewEmployeeFormController {
         String userName = txtUserName.getText();
         String newPw = txtPassword.getText();
         String confPw = txtConfirmPass.getText();
+        String NIC = txtEmpNIC.getText();
 
 
-        var dto = new EmployeeDto(id,name,address,contact,salary,userId);
+        var dto = new EmployeeDto(id,name,address,contact,salary,userId,NIC);
 
         try {
             boolean con = confirmPass(newPw, confPw);

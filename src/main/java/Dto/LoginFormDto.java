@@ -20,6 +20,9 @@ public class LoginFormDto {
         this.password = password;
     }
 
+    public LoginFormDto() {
+    }
+
     public String getUserName() {
         return userName;
     }

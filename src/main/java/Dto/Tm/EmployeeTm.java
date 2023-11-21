@@ -15,5 +15,6 @@ public class EmployeeTm {
     private String contact;
     private Double salary;
     private String userId;
+    private String NIC;
 
 }

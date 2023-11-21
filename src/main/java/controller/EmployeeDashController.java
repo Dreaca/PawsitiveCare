@@ -97,5 +97,9 @@ public class EmployeeDashController {
         this.sidePane.getChildren().clear();
         this.sidePane.getChildren().add(parent);
     }
+
+    public void setUserName(String userName) {
+        btnUser.setText(userName);
+    }
 }
 

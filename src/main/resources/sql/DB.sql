@@ -113,5 +113,6 @@ create table employee(
     contact varchar(25),
     salary double,
     userId varchar(10),
+    NIC varchar (50),
     constraint foreign key (userId) references user(userId) on update cascade on delete cascade
 );

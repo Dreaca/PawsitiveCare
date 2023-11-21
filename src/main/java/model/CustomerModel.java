@@ -24,7 +24,7 @@ public class CustomerModel {
         if (resultSet.next()){
             return resultSet.getString("custId");
         }
-        else return null;
+        else return  "N/A";
     }
 
     public static String getCustomerName(String custId) throws SQLException {

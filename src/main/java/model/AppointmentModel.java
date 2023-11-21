@@ -12,8 +12,9 @@ import static Db.DbConnection.getInstance;
 
 public class AppointmentModel {
     public boolean addAppointment(AppointmentDto dto, CustomerDto cus) throws SQLException {
+        CustomerModel model = new CustomerModel();
         Connection connection = getInstance().getConnection();
-        String cusID = CustomerModel.getCustomerId(cus);
+        String cusID = model.getCustomerId(cus);
 
         PreparedStatement pstm = connection.prepareStatement("INSERT INTO appointment VALUES(?,?,?,?,?)");
         pstm.setString(1,dto.getAppId());

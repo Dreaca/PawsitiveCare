@@ -4,7 +4,6 @@ import Db.DbConnection;
 import Dto.EmployeeDto;
 import javafx.scene.image.Image;
 
-import java.io.ByteArrayInputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,8 @@ public class EmployeeModel {
                     resultSet.getString("name"),
                     resultSet.getString("contact"),
                     resultSet.getDouble("salary"),
-                    resultSet.getString("userId")
+                    resultSet.getString("userId"),
+                     resultSet.getString("NIC")
              )
             );
 
@@ -112,6 +112,25 @@ public class EmployeeModel {
         }
     }
 
+    public static EmployeeDto getEmployeeDetails(String userId) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT * FROM employee WHERE userId = ?");
+        pstm.setString(1,userId);
+        ResultSet resultSet = pstm.executeQuery();
+        if (resultSet.next()) {
+            return new EmployeeDto(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getDouble(5),
+                    resultSet.getString(6),
+                    resultSet.getString(7)
+            );
+        }
+        else return null;
+    }
+
     public String getName() {
         return name;
     }
@@ -119,6 +138,7 @@ public class EmployeeModel {
     public void setName(String name) {
         this.name = name;
     }
+
 
     public String getContact() {
         return contact;
@@ -129,7 +149,7 @@ public class EmployeeModel {
     }
 
     public boolean saveEmployee(EmployeeDto dto) throws SQLException {
-        String sql = "INSERT INTO employee VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO employee VALUES(?,?,?,?,?,?,?,?)";
 
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pstm = connection.prepareStatement(sql);
@@ -141,8 +161,27 @@ public class EmployeeModel {
         pstm.setDouble(5,dto.getSalary());
         pstm.setString(6,dto.getUserId());
         pstm.setBlob(7, (Blob) null);
+        pstm.setString(8,dto.getNIC());
 
         int i = pstm.executeUpdate();
         return i > 0;
+    }
+
+    public boolean updateName(String name, String userId) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("UPDATE employee SET name = ? WHERE userId = ?");
+        pstm.setString(1,name);
+        pstm.setString(2,userId);
+        int i = pstm.executeUpdate();
+        return i > 0;
+    }
+
+    public boolean UpdateNIC(String userId, String nic) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("UPDATE employee SET NIC = ? WHERE userId = ?");
+        pstm.setString(1,nic);
+        pstm.setString(2,userId);
+        int i = pstm.executeUpdate();
+        return i>0;
     }
 }

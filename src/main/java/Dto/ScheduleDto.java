@@ -1,12 +1,19 @@
 package Dto;
 
-import java.sql.Time;
-import java.util.Date;
+import lombok.*;
 
+import java.sql.Time;
+import java.time.LocalDate;
+import java.util.Date;
+@Getter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
 public class ScheduleDto {
     private String scheduleId;
-    private Date date;
+    private LocalDate date;
     private  String duration;
-    private Time time;
+    private String  time;
     private String vetName;
 }

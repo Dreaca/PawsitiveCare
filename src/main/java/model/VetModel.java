@@ -63,4 +63,41 @@ public class VetModel {
         }
        else return null;
     }
+
+    public String getVetName(String vetId) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT name FROM veterinarian WHERE vetId = ?");
+        pstm.setString(1,vetId);
+        ResultSet resultSet = pstm.executeQuery();
+        if (resultSet.next()){
+            return resultSet.getString(1);
+        }
+        else {
+            return null;
+        }
+    }
+
+    public List<String> getAllVetNames() throws SQLException {
+        ArrayList <String> list = new ArrayList<>();
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT name FROM veterinarian");
+        ResultSet resultSet = pstm.executeQuery();
+                while(resultSet.next()) {
+                    list.add(resultSet.getString(1));
+        }
+                return list;
+    }
+
+    public String getVetId(String vetName) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT vetId FROM veterinarian WHERE name = ?");
+        pstm.setString(1,vetName);
+        ResultSet resultSet = pstm.executeQuery();
+        if (resultSet.next()){
+            return resultSet.getString(1);
+        }
+        else {
+            return null;
+        }
+    }
 }

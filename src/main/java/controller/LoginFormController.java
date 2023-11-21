@@ -38,10 +38,10 @@ public class LoginFormController {
 
         if(authenticateResult){
             String currentUser = LoginModel.getUser(login);
-            if(currentUser.equals("Admin")){
-               loadAdminDash();
+            if(currentUser.startsWith("A")){
+               loadAdminDash(userName);
             } else if (currentUser.startsWith("E")) {
-                loadEmployeeDash();
+                loadEmployeeDash(userName);
             }
         }
         else {
@@ -49,31 +49,40 @@ public class LoginFormController {
             }
     }
 
-    private void loadAdminDash() {
+    private void loadAdminDash(String userName) throws SQLException {
         AnchorPane anchorPane = null;
+        FXMLLoader loader;
         try {
-            anchorPane = FXMLLoader.load(getClass().getResource("/view/dashBoards/AdminDash/adminDash.fxml"));
+            loader = new FXMLLoader(getClass().getResource("/view/dashBoards/AdminDash/adminDash.fxml"));
+            anchorPane = loader.load();
+            Scene scene = new Scene(anchorPane);
+            AdminFormController controller = loader.getController();
+            controller.setUSerName(userName);
+            Stage stage = (Stage) root.getScene().getWindow();
+            stage.setTitle("Admin Dashboard");
+            stage.setScene(scene);
+            stage.centerOnScreen();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Scene scene = new Scene(anchorPane);
-        Stage stage = (Stage) root.getScene().getWindow();
-        stage.setTitle("Admin Dashboard");
-        stage.setScene(scene);
-        stage.centerOnScreen();
+
     }
-    private void loadEmployeeDash(){
+    private void loadEmployeeDash(String userName){
         AnchorPane anchorPane = null;
         try {
-            anchorPane = FXMLLoader.load(getClass().getResource("/view/dashBoards/EmployeeDash/empDash.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashBoards/EmployeeDash/empDash.fxml"));
+            anchorPane = loader.load();
+            Scene scene = new Scene(anchorPane);
+            EmployeeDashController controller = loader.getController();
+            controller.setUserName(userName);
+            Stage stage = (Stage) root.getScene().getWindow();
+            stage.setTitle("Employee Dashboard");
+            stage.setScene(scene);
+            stage.centerOnScreen();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Scene scene = new Scene(anchorPane);
-        Stage stage = (Stage) root.getScene().getWindow();
-        stage.setTitle("Employee Dashboard");
-        stage.setScene(scene);
-        stage.centerOnScreen();
+
     }
 
 

@@ -20,6 +20,8 @@ public class EmployeeTileController {
     public Label lblUserId;
     public Label lblSalary;
 
+    public Label lblNIC;
+
     public void setEmployeeData(EmployeeDto employee) {
         //imgEmpImg.setImage(new Image(String.valueOf(employee.getPhoto())));
         lblEmpId.setText(employee.getEmpId());
@@ -28,6 +30,7 @@ public class EmployeeTileController {
         lblContact.setText(employee.getContact());
         lblSalary.setText(String.valueOf(employee.getSalary()));
         lblUserId.setText(employee.getUserId());
+        lblNIC.setText(employee.getNIC());
 
     }
 

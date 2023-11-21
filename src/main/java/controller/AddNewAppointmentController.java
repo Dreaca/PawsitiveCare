@@ -4,7 +4,6 @@ import Dto.AppointmentDto;
 import Dto.CustomerDto;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -12,10 +11,8 @@ import javafx.stage.Stage;
 import model.AppointmentModel;
 
 import java.io.IOException;
-import java.lang.invoke.SwitchPoint;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.time.chrono.Chronology;
+import java.util.regex.Pattern;
 
 public class AddNewAppointmentController {
     public AnchorPane root;
@@ -47,20 +44,42 @@ public class AddNewAppointmentController {
         String appId = lblAppId.getText();
         String customer = txtCustomer.getText();
         AppointmentDto.AppType type = (AppointmentDto.AppType) cmbApType.getValue();
-        lblPrice.setText(getPriceFor(type));
+        cmbApType.setOnAction(event -> {
+            lblPrice.setText(getPriceFor(AppointmentDto.AppType.valueOf(((AppointmentDto.AppType) cmbApType.getValue()).name())));
+        });
         String time = txtTime.getText();
         String contact = txtCustomerContact.getText();
         String date = String.valueOf(dpkDate.getValue());
-        var dto = new AppointmentDto(appId,customer,type,time,date);
-        CustomerDto cus = new CustomerDto(customer,contact);
-        try {
-            boolean isSaved = model.addAppointment(dto,cus);
-            if (isSaved) {
-                new Alert(Alert.AlertType.CONFIRMATION,"Appointment Saved").show();
+        if (checkValidity()) {
+            var dto = new AppointmentDto(appId,customer,type,time,date);
+            CustomerDto cus = new CustomerDto(customer,contact);
+            try {
+                boolean isSaved = model.addAppointment(dto,cus);
+                if (isSaved) {
+                    new Alert(Alert.AlertType.CONFIRMATION,"Appointment Saved").show();
+                }
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
             }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
         }
+
+    }
+
+    private boolean checkValidity() {
+        boolean matches = Pattern.matches("(App)[0-9]{1,}", lblAppId.getText());
+        if(!matches){
+            new Alert(Alert.AlertType.ERROR,"wrong AppId").show();
+        }
+        if(!Pattern.matches("[0-9][0-9](:)[0-9][0-9]",txtTime.getText())){
+            new Alert(Alert.AlertType.ERROR,"Time format wrong").show();
+        }
+        if(!Pattern.matches("[A-za-z]\\s[A-za-z]",txtCustomer.getText())){
+            new Alert(Alert.AlertType.ERROR,"Customer Name Wrong");
+        }
+        if(!Pattern.matches("[0-9]",txtCustomerContact.getText())){
+            new Alert(Alert.AlertType.ERROR,"Customer Contact is wrong").show();
+        }
+         return true;
     }
 
     private String getPriceFor(AppointmentDto.AppType type) {
@@ -68,15 +87,15 @@ public class AddNewAppointmentController {
         switch (type) {
             case CHECKUP:
                 price = "500";
-                break;
+                return price;
             case SURGERY:
                 price =  "1500";
-                break;
+                return price;
             case VACCINATION:
                 price =  "1000";
-                break;
+                return price;
         }
-        return price;
+        return "Not applicaple";
     }
 
 

@@ -15,4 +15,5 @@ public class EmployeeDto {
         private String contact;
         private double salary;
         private  String userId;
+        private String NIC;
 }

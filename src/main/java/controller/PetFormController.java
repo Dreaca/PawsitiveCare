@@ -11,6 +11,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.CustomerModel;
@@ -33,6 +35,8 @@ public class PetFormController {
     public TableView tblPet;
     public TableColumn colColor;
     public TableColumn colModify;
+    private Image im = new Image("/view/Assets/icon/settings.png");
+    private ImageView imv = new ImageView(im);
 
     public PetFormController() throws IOException {
     }
@@ -81,6 +85,9 @@ public class PetFormController {
             oblist.get(i).getModifyButton().setOnAction(actionEvent -> {
                 try {
                     JFXButton bt = oblist.get(finalI1).getModifyButton();
+                    imv.setFitWidth(20);
+                    imv.setFitHeight(20);
+                    bt.setGraphic(imv);
                     double x = bt.localToScreen(bt.getBoundsInLocal()).getMinX();
                     double y = bt.localToScreen(bt.getBoundsInLocal()).getMinY();
                    ContextMenu con =  loadPopup(oblist.get(finalI).getModifyButton());

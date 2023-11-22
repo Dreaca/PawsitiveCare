@@ -63,7 +63,8 @@ public class AppointmentModel {
                             contact,
                             AppointmentDto.getvalueOf(resultSet.getString("type")),
                             resultSet.getString("time"),
-                            resultSet.getString("date")
+                            resultSet.getString("date"),
+                            resultSet.getDouble("price")
                     )
             );
         }

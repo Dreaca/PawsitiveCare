@@ -34,6 +34,9 @@ public class AddNewAppointmentController {
     public void initialize() throws SQLException {
         loadData();
         lblAppId.setText(model.getNextAppid());
+        cmbApType.setOnAction(event -> {
+            lblPrice.setText(getPriceFor(AppointmentDto.AppType.valueOf(((AppointmentDto.AppType) cmbApType.getValue()).name())));
+        });
     }
 
     public void loadData(){
@@ -44,14 +47,12 @@ public class AddNewAppointmentController {
         String appId = lblAppId.getText();
         String customer = txtCustomer.getText();
         AppointmentDto.AppType type = (AppointmentDto.AppType) cmbApType.getValue();
-        cmbApType.setOnAction(event -> {
-            lblPrice.setText(getPriceFor(AppointmentDto.AppType.valueOf(((AppointmentDto.AppType) cmbApType.getValue()).name())));
-        });
+        double price = Double.valueOf(lblPrice.getText());
         String time = txtTime.getText();
         String contact = txtCustomerContact.getText();
         String date = String.valueOf(dpkDate.getValue());
         if (checkValidity()) {
-            var dto = new AppointmentDto(appId,customer,type,time,date);
+            var dto = new AppointmentDto(appId,customer,contact,type,time,date,price);
             CustomerDto cus = new CustomerDto(customer,contact);
             try {
                 boolean isSaved = model.addAppointment(dto,cus);

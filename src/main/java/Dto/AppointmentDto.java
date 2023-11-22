@@ -16,14 +16,8 @@ public class AppointmentDto {
     private AppType type;
     private String time;
     private String date;
+    private Double price;
 
-    public AppointmentDto(String appId, String customerName, AppType type, String time, String date) {
-        this.appId = appId;
-        this.customerName = customerName;
-        this.type = type;
-        this.time = time;
-        this.date = date;
-    }
 
     public static enum AppType {
         SURGERY, VACCINATION, CHECKUP

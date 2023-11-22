@@ -49,7 +49,8 @@ create table appointment(
 	custId varchar(10) not null,
 	type ENUM('Checkup','Surgery','Vaccination') not null,
 	time time(2),
-	date varchar,
+	date varchar(20),
+	price double,
 	constraint foreign key (custId) references customer(custId) on update cascade on delete cascade
 	);
 create table pet(

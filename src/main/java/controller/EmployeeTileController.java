@@ -32,7 +32,7 @@ public class EmployeeTileController {
         lblSalary.setText(String.valueOf(employee.getSalary()));
         lblUserId.setText(employee.getUserId());
         lblNIC.setText(employee.getNIC());
-        imgEmpImg.setImage(new Image(new FileInputStream(employee.getImagePath())));
+        imgEmpImg.setImage(new Image("/view/Assets/image/veterinary.png"));
     }
 
     public void deleteOnAction(ActionEvent actionEvent) throws SQLException {

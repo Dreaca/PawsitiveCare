@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import model.EmployeeModel;
 import model.LoginModel;
 
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -100,7 +101,7 @@ public class AddNewEmployeeFormController {
             String imagePath = image;
 
 
-            var dto = new EmployeeDto(id, name, address, contact, salary, userId, NIC,imagePath);
+            var dto = new EmployeeDto(id, name, address, contact, salary, userId, NIC);
 
             try {
                 boolean con = confirmPass(newPw, confPw);
@@ -117,7 +118,7 @@ public class AddNewEmployeeFormController {
                         }
                     }
                 }
-            } catch (SQLException e) {
+            } catch (SQLException | FileNotFoundException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
         }

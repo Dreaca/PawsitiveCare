@@ -4,6 +4,8 @@ import Db.DbConnection;
 import Dto.EmployeeDto;
 import javafx.scene.image.Image;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
@@ -22,37 +24,31 @@ public class EmployeeModel {
     }
 
     public static List<EmployeeDto> getEmployeeDtos() throws SQLException {
-
         String sql = "SELECT * FROM employee";
-
         Connection connection = DbConnection.getInstance().getConnection();
-
         PreparedStatement pstm = connection.prepareStatement(sql);
-
         ResultSet resultSet = pstm.executeQuery();
 
         ArrayList<EmployeeDto> employeeDtos = new ArrayList<>();
 
-        while (resultSet.next()){
-            Blob blob = resultSet.getBlob(8);
-            byte[] image = blob.getBytes(1, (int) blob.length());
-            InputStream stream = new ByteArrayInputStream(image);
+        while (resultSet.next()) {
             employeeDtos.add(
-             new EmployeeDto(
-                    resultSet.getString("employeeId"),
-                    resultSet.getString("address"),
-                    resultSet.getString("name"),
-                    resultSet.getString("contact"),
-                    resultSet.getDouble("salary"),
-                    resultSet.getString("userId"),
-                     resultSet.getString("NIC"),
-                     stream.toString()
-             )
+                    new EmployeeDto(
+                            resultSet.getString(1),
+                            resultSet.getString(2),
+                            resultSet.getString(3),
+                            resultSet.getString(4),
+                            resultSet.getDouble(5),
+                            resultSet.getString(6),
+                            resultSet.getString(7)
+                    )
             );
-
         }
+
         return employeeDtos;
     }
+
+
 
     public static String generateNextEmpId() throws SQLException {
         String sql = "SELECT * FROM employee ORDER BY employeeID DESC LIMIT 1 ";
@@ -121,10 +117,6 @@ public class EmployeeModel {
         pstm.setString(1,userId);
         ResultSet resultSet = pstm.executeQuery();
         if (resultSet.next()) {
-            Blob blob = resultSet.getBlob(8);
-            byte[] image = blob.getBytes(1, (int) blob.length());
-            InputStream stream = new ByteArrayInputStream(image);
-
             return new EmployeeDto(
                     resultSet.getString(1),
                     resultSet.getString(2),
@@ -132,8 +124,7 @@ public class EmployeeModel {
                     resultSet.getString(4),
                     resultSet.getDouble(5),
                     resultSet.getString(6),
-                    resultSet.getString(7),
-                    stream.toString()
+                    resultSet.getString(7)
 
             );
         }
@@ -158,8 +149,6 @@ public class EmployeeModel {
     }
 
     public boolean saveEmployee(EmployeeDto dto) throws SQLException, FileNotFoundException {
-        File image = new File(dto.getImagePath());
-        FileInputStream stream = new FileInputStream(image);
         String sql = "INSERT INTO employee VALUES(?,?,?,?,?,?,?,?)";
 
         Connection connection = DbConnection.getInstance().getConnection();
@@ -172,7 +161,6 @@ public class EmployeeModel {
         pstm.setDouble(5,dto.getSalary());
         pstm.setString(6,dto.getUserId());
         pstm.setString(7, dto.getNIC());
-        pstm.setBinaryStream(8,stream,(int)image.length());
 
         int i = pstm.executeUpdate();
         return i > 0;

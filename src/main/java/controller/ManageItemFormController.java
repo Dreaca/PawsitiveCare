@@ -36,8 +36,7 @@ public class ManageItemFormController {
     public JFXButton btnUpdate;
     public JFXButton btnAdd;
     public TableColumn colDel;
-    private Image image =  new Image("/view/Assets/icon/trashbin.png");
-    private ImageView imgV = new ImageView(image);
+
 
     private ItemModel model = new ItemModel();
     Tooltip t1 = new Tooltip("Add item");
@@ -88,15 +87,9 @@ public class ManageItemFormController {
                                 d.getDescription(),
                                 d.getQtyOnHand(),
                                 d.getUnitPrice(),
-                                new JFXButton()
+                                getJFXButton()
                         )
                 );
-                for (int i = 0; i < oblist.size(); i++) {
-                    JFXButton deletebutton = oblist.get(i).getDeletebutton();
-                    imgV.setFitHeight(20);
-                    imgV.setFitWidth(20);
-                    deletebutton.setGraphic(imgV);
-                }
                 tblItem.setItems(oblist);
 
             }
@@ -104,6 +97,16 @@ public class ManageItemFormController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private JFXButton getJFXButton() {
+        JFXButton button = new JFXButton();
+        Image image =  new Image("/view/Assets/icon/trashbin.png");
+        ImageView imgV = new ImageView(image);
+        imgV.setFitHeight(20);
+        imgV.setFitWidth(20);
+        button.setGraphic(imgV);
+        return button;
     }
 
     private void setCellValueFactory() {

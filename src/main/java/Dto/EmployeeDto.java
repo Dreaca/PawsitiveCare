@@ -1,6 +1,9 @@
 package Dto;
 
+import javafx.scene.image.Image;
 import lombok.*;
+
+import java.awt.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,5 +19,4 @@ public class EmployeeDto {
         private double salary;
         private  String userId;
         private String NIC;
-        private String imagePath;
 }

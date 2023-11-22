@@ -64,12 +64,22 @@ public class AddNewScheduleItemController extends ScheduleFormController {
         cmbDuration.getItems().setAll("8 hours","3 Hours","5 Hours");
         cmbVet.getItems().addAll(FXCollections.observableArrayList(model.getAllVetNames()));
         List<LocalTime> list = new ArrayList<>();
-        LocalTime start = LocalTime.of(6,0);
-        LocalTime end = LocalTime.of(21,0);
-        while (start.isAfter(end)){
-            list.add(start);
-            start.plusMinutes(30);
-        }
+        list.add(LocalTime.of(6,0));
+        list.add(LocalTime.of(7,0));
+        list.add(LocalTime.of(8,0));
+        list.add(LocalTime.of(9,0));
+        list.add(LocalTime.of(10,0));
+        list.add(LocalTime.of(11,0));
+        list.add(LocalTime.of(12,0));
+        list.add(LocalTime.of(13,0));
+        list.add(LocalTime.of(14,0));
+        list.add(LocalTime.of(15,0));
+        list.add(LocalTime.of(16,0));
+        list.add(LocalTime.of(17,0));
+        list.add(LocalTime.of(18,0));
+        list.add(LocalTime.of(19,0));
+        list.add(LocalTime.of(20,0));
+        list.add(LocalTime.of(21,0));
         cmbHours.getItems().addAll(FXCollections.observableArrayList(list));
         schedId = generateNextScheduleId();
     }

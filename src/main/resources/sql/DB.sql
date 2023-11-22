@@ -115,5 +115,6 @@ create table employee(
     salary double,
     userId varchar(10),
     NIC varchar (50),
+    image mediumblob,
     constraint foreign key (userId) references user(userId) on update cascade on delete cascade
 );

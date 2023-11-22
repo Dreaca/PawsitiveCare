@@ -9,10 +9,12 @@ import javafx.scene.image.ImageView;
 import model.EmployeeModel;
 import model.LoginModel;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
 public class EmployeeTileController {
-//    public ImageView imgEmpImg;
+    public ImageView imgEmpImg;
     public Label lblEmpName;
     public Label lblEmpId;
     public Label lblAddress;
@@ -22,8 +24,7 @@ public class EmployeeTileController {
 
     public Label lblNIC;
 
-    public void setEmployeeData(EmployeeDto employee) {
-        //imgEmpImg.setImage(new Image(String.valueOf(employee.getPhoto())));
+    public void setEmployeeData(EmployeeDto employee) throws FileNotFoundException {
         lblEmpId.setText(employee.getEmpId());
         lblEmpName.setText(employee.getName());
         lblAddress.setText(employee.getAddress());
@@ -31,7 +32,7 @@ public class EmployeeTileController {
         lblSalary.setText(String.valueOf(employee.getSalary()));
         lblUserId.setText(employee.getUserId());
         lblNIC.setText(employee.getNIC());
-
+        imgEmpImg.setImage(new Image(new FileInputStream(employee.getImagePath())));
     }
 
     public void deleteOnAction(ActionEvent actionEvent) throws SQLException {

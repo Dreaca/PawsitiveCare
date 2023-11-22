@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class PetFormController {
-    public ComboBox cbmFilter;
     public TableColumn colName;
     public TableColumn colId;
     public TableColumn colBreed;
@@ -35,23 +34,13 @@ public class PetFormController {
     public TableView tblPet;
     public TableColumn colColor;
     public TableColumn colModify;
-    private Image im = new Image("/view/Assets/icon/settings.png");
-    private ImageView imv = new ImageView(im);
 
-    public PetFormController() throws IOException {
-    }
 
-    public void combofiller(){
-        for (String string : Arrays.asList("Dog", "Cat", "Birds", "Other")) {
-            cbmFilter.getItems().add(string);
-        }
-    }
+
 
     public void initialize(){
-        combofiller();
         setCellValueFactory();
         loadAllData();
-
     }
 
     void loadAllData() {
@@ -69,7 +58,7 @@ public class PetFormController {
                           pet.getColor(),
                           CustomerModel.getCustomerName(pet.getOwnerId()),
                           null,
-                          new JFXButton("Modify")
+                          getnewJfxBtn()
                   )
                 );
             }
@@ -81,13 +70,9 @@ public class PetFormController {
             int finalI1 = i;
             int finalI2 = i;
             int finalI3 = i;
-            int finalI4 = i;
             oblist.get(i).getModifyButton().setOnAction(actionEvent -> {
                 try {
                     JFXButton bt = oblist.get(finalI1).getModifyButton();
-                    imv.setFitWidth(20);
-                    imv.setFitHeight(20);
-                    bt.setGraphic(imv);
                     double x = bt.localToScreen(bt.getBoundsInLocal()).getMinX();
                     double y = bt.localToScreen(bt.getBoundsInLocal()).getMinY();
                    ContextMenu con =  loadPopup(oblist.get(finalI).getModifyButton());
@@ -116,6 +101,16 @@ public class PetFormController {
         }
         tblPet.setItems(oblist);
         tblPet.refresh();
+    }
+
+    private JFXButton getnewJfxBtn() {
+        Image im = new Image("/view/Assets/icon/settings.png");
+        ImageView imv = new ImageView(im);
+        imv.setFitWidth(20);
+        imv.setFitHeight(20);
+        JFXButton bt = new JFXButton();
+        bt.setGraphic(imv);
+        return bt;
     }
 
     private void setCellValueFactory() {

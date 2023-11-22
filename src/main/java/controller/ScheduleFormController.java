@@ -1,5 +1,6 @@
 package controller;
 
+import Db.DbConnection;
 import Dto.ScheduleDto;
 import Dto.Tm.ScheduleTm;
 import com.jfoenix.controls.JFXButton;
@@ -15,10 +16,19 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.ScheduleModel;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ScheduleFormController {
     public TableColumn colDate;
@@ -29,8 +39,8 @@ public class ScheduleFormController {
     public TableView tblSchedule;
 
     public  ScheduleModel model = new ScheduleModel();
-    private Image image = new Image("/view/Assets/icon/settings.png");
-    private ImageView imageView = new ImageView(image);
+
+    ObservableList<ScheduleTm> oblist = FXCollections.observableArrayList();
     public void initialize() throws SQLException {
         setCellValueFactory();
         loadData();
@@ -38,27 +48,42 @@ public class ScheduleFormController {
 
 
     public void printScheduleOnAction(ActionEvent event) {
+        createJasperReport(oblist);
+    }
+
+    private void createJasperReport(ObservableList<ScheduleTm> oblist) {
+
+        try {
+            InputStream stream = getClass().getResourceAsStream("/report/schedule.jrxml");
+            JasperDesign load = JRXmlLoader.load(stream);
+            JasperReport report = JasperCompileManager.compileReport(load);
+            JasperPrint print = JasperFillManager.fillReport(report,null, DbConnection.getInstance().getConnection());
+
+            JasperViewer.viewReport(print);
+        } catch (JRException | SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void mailVetsOnAction(ActionEvent event) {
 
     }
 
-    public void refreshOnAction(ActionEvent event) {
+    public void refreshOnAction(ActionEvent event){
+        oblist.clear();
         loadData();
     }
 
     public void addScheduleOnAction(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashBoards/EmployeeDash/addNewScheduleItem.fxml"));
-        AddNewScheduleItemController controller = loader.getController();
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();
     }
     public void loadData(){
-        ObservableList<ScheduleTm> oblist = FXCollections.observableArrayList();
+
         try {
             List<ScheduleDto> list = model.getScheduleData();
             for (ScheduleDto d: list) {
@@ -74,13 +99,14 @@ public class ScheduleFormController {
             }
             tblSchedule.setItems(oblist);
 
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     private JFXButton getJFXButton() {
+        Image image = new Image("/view/Assets/icon/settings.png");
+        ImageView imageView = new ImageView(image);
         JFXButton bt = new JFXButton();
             imageView.setFitWidth(20);
             imageView.setFitHeight(20);
@@ -90,7 +116,6 @@ public class ScheduleFormController {
 
     public void setCellValueFactory(){
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
-//        colDay.setCellValueFactory(new PropertyValueFactory<>("day"));
         colTime.setCellValueFactory(new PropertyValueFactory<>("time"));
         colDuration.setCellValueFactory(new PropertyValueFactory<>("duration"));
         colVetName.setCellValueFactory(new PropertyValueFactory<>("vetName"));

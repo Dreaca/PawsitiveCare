@@ -16,4 +16,5 @@ public class EmployeeDto {
         private double salary;
         private  String userId;
         private String NIC;
+        private String imagePath;
 }

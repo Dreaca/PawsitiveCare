@@ -4,6 +4,7 @@ import Db.DbConnection;
 import Dto.EmployeeDto;
 import javafx.scene.image.Image;
 
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,6 @@ public class EmployeeModel {
 
     public static List<EmployeeDto> getEmployeeDtos() throws SQLException {
 
-
-
         String sql = "SELECT * FROM employee";
 
         Connection connection = DbConnection.getInstance().getConnection();
@@ -35,6 +34,9 @@ public class EmployeeModel {
         ArrayList<EmployeeDto> employeeDtos = new ArrayList<>();
 
         while (resultSet.next()){
+            Blob blob = resultSet.getBlob(8);
+            byte[] image = blob.getBytes(1, (int) blob.length());
+            InputStream stream = new ByteArrayInputStream(image);
             employeeDtos.add(
              new EmployeeDto(
                     resultSet.getString("employeeId"),
@@ -43,7 +45,8 @@ public class EmployeeModel {
                     resultSet.getString("contact"),
                     resultSet.getDouble("salary"),
                     resultSet.getString("userId"),
-                     resultSet.getString("NIC")
+                     resultSet.getString("NIC"),
+                     stream.toString()
              )
             );
 
@@ -118,6 +121,10 @@ public class EmployeeModel {
         pstm.setString(1,userId);
         ResultSet resultSet = pstm.executeQuery();
         if (resultSet.next()) {
+            Blob blob = resultSet.getBlob(8);
+            byte[] image = blob.getBytes(1, (int) blob.length());
+            InputStream stream = new ByteArrayInputStream(image);
+
             return new EmployeeDto(
                     resultSet.getString(1),
                     resultSet.getString(2),
@@ -125,7 +132,9 @@ public class EmployeeModel {
                     resultSet.getString(4),
                     resultSet.getDouble(5),
                     resultSet.getString(6),
-                    resultSet.getString(7)
+                    resultSet.getString(7),
+                    stream.toString()
+
             );
         }
         else return null;
@@ -148,7 +157,9 @@ public class EmployeeModel {
         this.contact = contact;
     }
 
-    public boolean saveEmployee(EmployeeDto dto) throws SQLException {
+    public boolean saveEmployee(EmployeeDto dto) throws SQLException, FileNotFoundException {
+        File image = new File(dto.getImagePath());
+        FileInputStream stream = new FileInputStream(image);
         String sql = "INSERT INTO employee VALUES(?,?,?,?,?,?,?,?)";
 
         Connection connection = DbConnection.getInstance().getConnection();
@@ -160,8 +171,8 @@ public class EmployeeModel {
         pstm.setString(4,dto.getContact());
         pstm.setDouble(5,dto.getSalary());
         pstm.setString(6,dto.getUserId());
-        pstm.setBlob(7, (Blob) null);
-        pstm.setString(8,dto.getNIC());
+        pstm.setString(7, dto.getNIC());
+        pstm.setBinaryStream(8,stream,(int)image.length());
 
         int i = pstm.executeUpdate();
         return i > 0;

@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.EmployeeModel;
 import model.LoginModel;
@@ -84,7 +85,7 @@ public class AddNewEmployeeFormController {
     }
 
     @FXML
-    void btnSaveOnAction(ActionEvent event) {
+    void btnSaveOnAction(String image) {
         if(checkValidity()){
             String id = lblEmployeeID.getText();
             String name = txtEmpFirstNAme.getText() + " " + txtEmpLastName.getText();
@@ -96,9 +97,10 @@ public class AddNewEmployeeFormController {
             String newPw = txtPassword.getText();
             String confPw = txtConfirmPass.getText();
             String NIC = txtEmpNIC.getText();
+            String imagePath = image;
 
 
-            var dto = new EmployeeDto(id, name, address, contact, salary, userId, NIC);
+            var dto = new EmployeeDto(id, name, address, contact, salary, userId, NIC,imagePath);
 
             try {
                 boolean con = confirmPass(newPw, confPw);
@@ -149,7 +151,17 @@ public class AddNewEmployeeFormController {
 
     @FXML
     void btnUploadOnAction(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Employee Image");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
+        );
+        Stage stage = (Stage) empImg.getScene().getWindow();
+        java.io.File selectedFile = fileChooser.showOpenDialog(stage);
 
+        if (selectedFile != null) {
+            btnSaveOnAction(selectedFile.getName());
+        }
 
     }
 

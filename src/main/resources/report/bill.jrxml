@@ -18,9 +18,9 @@
 	<title>
 		<band height="68" splitType="Stretch">
 			<staticText>
-				<reportElement x="155" y="16" width="235" height="30" uuid="a873ee81-f1fb-4d19-9d8a-07b560dcdc6a"/>
+				<reportElement x="155" y="14" width="235" height="46" uuid="a873ee81-f1fb-4d19-9d8a-07b560dcdc6a"/>
 				<textElement textAlignment="Center">
-					<font fontName="Manjari Thin" size="26"/>
+					<font fontName="SansSerif" size="26"/>
 				</textElement>
 				<text><![CDATA[Blue Husky Pet Clinic]]></text>
 			</staticText>

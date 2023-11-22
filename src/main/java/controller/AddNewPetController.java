@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.DragEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.CustomerModel;
 import model.PetModel;
@@ -54,8 +55,18 @@ public class AddNewPetController {
         stage.show();
     }
     public void uploadOnAction(){
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Select PDF File");
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("PDF Files", "*.pdf")
+            );
+            Stage stage = (Stage) recordsPane.getScene().getWindow();
+            java.io.File selectedFile = fileChooser.showOpenDialog(stage);
 
-    }
+            if (selectedFile != null) {
+                System.out.println("Selected File: " + selectedFile.getName());
+            }
+        }
     private void loadBreedAndGender() {
         for (String string : Arrays.asList("Dog", "Cat", "Bird", "other")) {
             cmbBreed.getItems().add(string);

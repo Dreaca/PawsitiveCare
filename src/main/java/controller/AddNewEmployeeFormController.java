@@ -17,6 +17,7 @@ import model.LoginModel;
 
 import java.sql.SQLException;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class AddNewEmployeeFormController {
 
@@ -84,39 +85,62 @@ public class AddNewEmployeeFormController {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
-        String id = lblEmployeeID.getText();
-        String name = txtEmpFirstNAme.getText()+" "+txtEmpLastName.getText();
-        String address = txtEmpAddress.getText();
-        String contact = txtEmpContact.getText();
-        Double salary = Double.valueOf(txtEmpSalary.getText());
-        String userId = lbluserID.getText();
-        String userName = txtUserName.getText();
-        String newPw = txtPassword.getText();
-        String confPw = txtConfirmPass.getText();
-        String NIC = txtEmpNIC.getText();
+        if(checkValidity()){
+            String id = lblEmployeeID.getText();
+            String name = txtEmpFirstNAme.getText() + " " + txtEmpLastName.getText();
+            String address = txtEmpAddress.getText();
+            String contact = txtEmpContact.getText();
+            Double salary = Double.valueOf(txtEmpSalary.getText());
+            String userId = lbluserID.getText();
+            String userName = txtUserName.getText();
+            String newPw = txtPassword.getText();
+            String confPw = txtConfirmPass.getText();
+            String NIC = txtEmpNIC.getText();
 
 
-        var dto = new EmployeeDto(id,name,address,contact,salary,userId,NIC);
+            var dto = new EmployeeDto(id, name, address, contact, salary, userId, NIC);
 
-        try {
-            boolean con = confirmPass(newPw, confPw);
-            if(con){
-                var LDto = new LoginFormDto(userId,userName,newPw);
-                boolean userSaved = logModel.saveUser(LDto);
+            try {
+                boolean con = confirmPass(newPw, confPw);
+                if (con) {
+                    var LDto = new LoginFormDto(userId, userName, newPw);
+                    boolean userSaved = logModel.saveUser(LDto);
 
-                if(userSaved) {
-                    boolean isSaved = employeeModel.saveEmployee(dto);
+                    if (userSaved) {
+                        boolean isSaved = employeeModel.saveEmployee(dto);
 
-                    if (isSaved) {
-                        savedEmployee = isSaved;
-                        new Alert(Alert.AlertType.CONFIRMATION, "User Saved !").show();
+                        if (isSaved) {
+                            savedEmployee = isSaved;
+                            new Alert(Alert.AlertType.CONFIRMATION, "User Saved !").show();
+                        }
                     }
                 }
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
             }
-        } catch (SQLException e) {
-             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
         }
 
+    }
+
+    private boolean checkValidity() {
+        if(!Pattern.matches("[A-za-z]&^([\\s][0-9])",txtEmpFirstNAme.getText())){
+            new Alert(Alert.AlertType.WARNING,"Firstname Can not Include Spaces or numbers").show();
+        }
+        else if(!Pattern.matches("[A-za-z]&^([\\s][0-9])",txtEmpLastName.getText())){
+            new Alert(Alert.AlertType.WARNING,"Last name can not Include spaces or Numbers").show();
+        } else if (!Pattern.matches("[A-Za-z0-9]&[/]",txtEmpAddress.getText())){
+            new Alert(Alert.AlertType.WARNING,"Address Can't Include Special characters").show();
+        }else if(!Pattern.matches("",txtEmpContact.getText())){
+            new Alert(Alert.AlertType.WARNING,"Contact wrong").show();
+        }
+        else if(!Pattern.matches("[0-9]{9}[V|v|x|X]|[0-9]{12}",txtEmpNIC.getText())){
+            new Alert(Alert.AlertType.WARNING,"NIC is wrong").show();
+        } else if (Pattern.matches("^[\\s]",txtUserName.getText())) {
+            new Alert(Alert.AlertType.WARNING,"User Name Cannot include Spaces").show();
+        }else if(!Pattern.matches("^[\\s]&{4,}",txtPassword.getText())){
+            new Alert(Alert.AlertType.WARNING,"Password needs to be more than 4 characters and Can't include spaces").show();
+        }
+        return true;
     }
 
     private boolean confirmPass(String newPw, String confPw) {

@@ -11,19 +11,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class OrderDetailModel {
-    public boolean saveOrder(String orderId, String custId, LocalDate date) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement("INSERT INTO orders VALUES(?,?,?)");
-        pstm.setString(1,orderId);
-        pstm.setString(2,custId);
-        pstm.setDate(3, Date.valueOf(date));
-        int i = pstm.executeUpdate();
-        return i>0;
-    }
+
 
     public boolean saveOrderDetails(String orderId, List<OrderTm> list) throws SQLException {
+        int i = 1;
         for (OrderTm tm : list) {
             if (!saveOrderDetails(orderId,tm)){
+                System.out.println(i++);
                 return false;
             }
         }

@@ -1,9 +1,8 @@
 package controller;
 
 import Dto.CustomerDto;
-import Dto.ItemDto;
-import Dto.OrderDto;
 import Dto.PlaceOrderDto;
+import Dto.Tm.AppointmentTm;
 import Dto.Tm.OrderTm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,12 +15,21 @@ import model.CustomerModel;
 import model.ItemModel;
 import model.OrderModel;
 import model.PlaceOrderModel;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperDesignViewer;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OrderFormController {
     public TableView tblOrder;
@@ -53,12 +61,16 @@ public class OrderFormController {
         txtUnitPrice.setText(String.valueOf(dto.getUnitPrice()));
     }
     public void btnAddItemOnAction(){
-        int itemCount = 0;
         String itemCode = (String) cmbItemCode.getValue();
         String desc = txtDescription.getText();
         int qty = Integer.parseInt(txtQty.getText());
         double uni = Double.parseDouble(txtUnitPrice.getText());
         double amount = qty*uni;
+        double total = calculateTotal()+amount;
+        lblNetTotal.setText(String.valueOf(total));
+        int itemCount = Integer.parseInt(lblItemCount.getText());
+        itemCount++;
+        lblItemCount.setText(String.valueOf(itemCount));
 //        if (!oblist.isEmpty()){
 //            for (int i = 0; i < tblOrder.getItems().size(); i++) {
 //                if(colItemCode.getCellData(i).equals(itemCode)){
@@ -76,25 +88,36 @@ public class OrderFormController {
 //            }
 //        }
         var order = new OrderTm(itemCode,desc,qty,uni,amount);
-        System.out.println(order);
         oblist.add(order);
         tblOrder.setItems(oblist);
         txtQty.clear();
         txtDescription.clear();
         txtUnitPrice.clear();
-        cmbItemCode.promptTextProperty();
     }
 
-    private void calculateTotal() {
+    private double calculateTotal() {
         double total = 0;
-        for (int i = 0; i < tblOrder.getItems().size(); i++) {
-            total +=(double) colAmount.getCellData(i);
+        for (int i = 0; i < oblist.size(); i++) {
+            double amount = oblist.get(i).getAmount();
+            total = total+amount;
         }
-        lblNetTotal.setText(String.valueOf(total));
+        return total;
     }
 
     public void btnClearOnAction(){
-        
+        ObservableList<AppointmentTm> oblist = FXCollections.observableArrayList();
+        oblist.add(null);
+        tblOrder.setItems(oblist);
+        tblOrder.refresh();
+        cmbItemCode.promptTextProperty();
+        txtDescription.clear();
+        txtUnitPrice.clear();
+        txtCustomerId.clear();
+        txtQty.clear();
+        txtCustomerName.clear();
+        txtCustomerContact.clear();
+        lblItemCount.setText("0");
+        lblNetTotal.setText("0.0");
     }
     public void placeOrderOnAction(){
         String orderId = lblOrderId.getText();
@@ -110,12 +133,44 @@ public class OrderFormController {
         var placeOrderDto = new PlaceOrderDto(orderId,custId,date,orderList);
         try {
             if(placeOrderModel.placeOrder(placeOrderDto)){
-                new Alert(Alert.AlertType.CONFIRMATION, "Order Saved").show();
+                createJasperReport(orderList);
+                lblOrderId.setText(model.generateNextOrderId());
+                btnClearOnAction();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
         }
     }
+
+    private void createJasperReport(List<OrderTm> orderList) {
+        try {
+            Map parameters = new HashMap<>();
+            parameters.put("OrderId", lblOrderId.getText());
+            parameters.put("NetTotal", lblNetTotal.getText());
+
+            for (int i = 0; i < orderList.size(); i++) {
+                parameters.put("code",orderList.get(i).getItemCode());
+                parameters.put("name",orderList.get(i).getDescription());
+                parameters.put("Qty",String.valueOf(orderList.get(i).getQty()));
+                parameters.put("unitPrice",String.valueOf(orderList.get(i).getUnitPrice()));
+                parameters.put("amount",String.valueOf(orderList.get(i).getAmount()));
+            }
+
+            InputStream ResourceAsStream = getClass().getResourceAsStream("/report/bill.jrxml");
+            JasperDesign load = JRXmlLoader.load(ResourceAsStream);
+            JasperReport jasperReport = JasperCompileManager.compileReport(load);
+
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (JRException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+
     public void cancelOnAction(){
         
     }
@@ -136,7 +191,6 @@ public class OrderFormController {
     }
 
     private void loadAllData() throws SQLException {
-
         lblOrderId.setText(model.generateNextOrderId());
         cmbItemCode.getItems().setAll(itemModel.getItemCodes());
         lblDate.setText(String.valueOf(LocalDate.now()));

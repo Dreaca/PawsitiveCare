@@ -75,7 +75,6 @@ public class LoginModel {
                 return resultSet.getString("userId");
             }
         }
-
         return null;
     }
 
@@ -159,5 +158,16 @@ public class LoginModel {
         pstm.setString(2,userId);
         int i = pstm.executeUpdate();
         return i > 0;
+    }
+
+    public String checkValidity(String nic) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT userId FROM employee WHERE NIC LIKE ?");
+        pstm.setString(1,"%"+nic);
+        ResultSet resultSet = pstm.executeQuery();
+        if (resultSet.next()) {
+            return resultSet.getString(1);
+        }
+        else return null;
     }
 }

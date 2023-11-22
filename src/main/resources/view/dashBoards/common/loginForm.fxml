@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -22,17 +23,17 @@
          </children>
       </AnchorPane>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2197ff00" height="668.0" layoutX="723.0" layoutY="29.0" stroke="BLACK" strokeType="INSIDE" width="608.0" />
-      <TextField fx:id="txtUserNAme" layoutX="845.0" layoutY="286.0" prefHeight="58.0" prefWidth="393.0" promptText="User name" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: black;">
+      <TextField fx:id="txtUserNAme" layoutX="845.0" layoutY="223.0" prefHeight="58.0" prefWidth="393.0" promptText="User name" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: black;">
          <font>
             <Font name="Manjari Thin" size="21.0" />
          </font>
       </TextField>
-      <PasswordField fx:id="txtPassword" layoutX="845.0" layoutY="382.0" prefHeight="58.0" prefWidth="393.0" promptText="Password" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: black;">
+      <PasswordField fx:id="txtPassword" layoutX="844.0" layoutY="293.0" prefHeight="58.0" prefWidth="393.0" promptText="Password" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: black;">
          <font>
             <Font name="Manjari Thin" size="23.0" />
          </font>
       </PasswordField>
-      <JFXButton fx:id="btnLogin" buttonType="RAISED" layoutX="935.0" layoutY="485.0" onAction="#loginOnAction" prefHeight="74.0" prefWidth="214.0" ripplerFill="#ffbe4fe5" style="-fx-background-color: orange; -fx-background-radius: 25;" text="Login">
+      <JFXButton fx:id="btnLogin" buttonType="RAISED" layoutX="934.0" layoutY="364.0" onAction="#loginOnAction" prefHeight="29.0" prefWidth="214.0" ripplerFill="#ffbe4fe5" style="-fx-background-color: orange; -fx-background-radius: 25;" text="Login">
          <font>
             <Font size="27.0" />
          </font>
@@ -47,16 +48,23 @@
             <Font name="Manjari Thin" size="26.0" />
          </font>
       </Label>
-      <Label fx:id="incorrect" disable="true" layoutX="838.0" layoutY="242.0" prefHeight="29.0" prefWidth="392.0" text="* Password or Username is Incorrect" textFill="#eb0808" />
-      <ImageView fitHeight="44.0" fitWidth="53.0" layoutX="792.0" layoutY="291.0" pickOnBounds="true" preserveRatio="true">
+      <Label fx:id="incorrect" disable="true" layoutX="838.0" layoutY="179.0" prefHeight="29.0" prefWidth="392.0" text="* Password or Username is Incorrect" textFill="#eb0808" />
+      <ImageView fitHeight="44.0" fitWidth="53.0" layoutX="792.0" layoutY="228.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Assets/icon/paw.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="44.0" fitWidth="53.0" layoutX="793.0" layoutY="389.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="44.0" fitWidth="53.0" layoutX="792.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Assets/icon/veterinary.png" />
          </image>
       </ImageView>
+      <Hyperlink fx:id="hyperForgotPass" layoutX="1119.0" layoutY="427.0" onAction="#forgotPassOnAction" prefHeight="22.0" prefWidth="168.0" text="Forgot Password?" visible="false" />
+      <Label fx:id="lblEnterNIC" layoutX="845.0" layoutY="490.0" text="Enter the last 4 digits for your NIC number" visible="false">
+         <font>
+            <Font name="Manjari Thin" size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtNICDigit" layoutX="849.0" layoutY="538.0" onAction="#checkNIConAction" prefHeight="24.0" prefWidth="356.0" visible="false" />
    </children>
 </AnchorPane>

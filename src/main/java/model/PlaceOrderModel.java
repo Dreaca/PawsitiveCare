@@ -3,6 +3,7 @@ package model;
 import Db.DbConnection;
 import Dto.OrderDto;
 import Dto.PlaceOrderDto;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -10,7 +11,7 @@ import java.time.LocalDate;
 
 
 public class PlaceOrderModel {
-    private OrderDetailModel model = new OrderDetailModel();
+    private OrderModel model = new OrderModel();
     private  ItemModel itemModel = new ItemModel();
     private OrderDetailModel orderDetailModel = new OrderDetailModel();
     public boolean placeOrder(PlaceOrderDto placeOrderDto) throws SQLException {
@@ -28,8 +29,9 @@ public class PlaceOrderModel {
                     }
                 }
             }
-            connection.rollback();
+            else connection.rollback();
         } catch (SQLException e) {
+            new Alert(Alert.AlertType.WARNING,e.getMessage()).show();
             connection.rollback();
         }
         finally {

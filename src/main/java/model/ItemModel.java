@@ -126,7 +126,7 @@ public class ItemModel {
 
     private boolean updateQty(String itemCode, int qty) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
-        PreparedStatement pstm = connection.prepareStatement("UPDATE orders SET qtyOnHand = qtyOnHand -  ? WHERE itemId = ?");
+        PreparedStatement pstm = connection.prepareStatement("UPDATE item SET qtyOnHand = qtyOnHand -  ? WHERE itemId = ?");
         pstm.setInt(1,qty);
         pstm.setString(2,itemCode);
         return pstm.executeUpdate()>0;

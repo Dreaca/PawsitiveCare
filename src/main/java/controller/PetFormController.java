@@ -20,6 +20,8 @@ import model.PetModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -34,8 +36,9 @@ public class PetFormController {
     public TableView tblPet;
     public TableColumn colColor;
     public TableColumn colModify;
-
-
+    public Label petCount;
+    public Label date;
+    public Label time;
 
 
     public void initialize(){
@@ -45,8 +48,12 @@ public class PetFormController {
 
     void loadAllData() {
         PetModel model = new PetModel();
+        date.setText(String.valueOf(LocalDate.now()));
+        time.setText(String.valueOf(LocalTime.now()));
         ObservableList<PetTm> oblist = FXCollections.observableArrayList();
+
         try {
+            petCount.setText(model.getPetCount());
             List<PetDto> list = model.getAllPets();
             for (PetDto pet: list) {
                 oblist.add(

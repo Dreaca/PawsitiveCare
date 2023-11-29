@@ -6,9 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.LoginModel;
+
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -19,14 +21,18 @@ public class LoginFormController {
     public JFXButton btnLogin;
     public PasswordField txtPassword;
     public AnchorPane root;
-    public AnchorPane stuff;
     public Label incorrect;
     public Hyperlink hyperForgotPass;
     public Label lblEnterNIC;
     public TextField txtNICDigit;
+    public Image bgs = new Image("view/Assets/image/puppy.jpg");
 
     public void initialize(){
         incorrect.setVisible(false);
+        root.setStyle("-fx-background-image : url("+
+                bgs.getUrl()+");"+
+                "-fx-background-size : cover;");
+
     }
 
     public void loginOnAction(ActionEvent actionEvent) throws SQLException {

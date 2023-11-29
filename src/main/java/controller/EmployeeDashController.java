@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -100,6 +101,11 @@ public class EmployeeDashController {
 
     public void setUserName(String userName) {
         btnUser.setText(userName);
+    }
+
+    public void exitOnAction(ActionEvent event) {
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.close();
     }
 }
 

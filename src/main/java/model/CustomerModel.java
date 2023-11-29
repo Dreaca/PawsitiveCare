@@ -198,4 +198,44 @@ public class CustomerModel {
             return new CustomerDto("Not in System",null,"Not in System","Not in system");
 
     }
+
+    public int getCount() throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT COUNT(*) as count FROM customer ");
+        ResultSet resultSet = pstm.executeQuery();
+        if (resultSet.next()) {
+            return resultSet.getInt("count");
+        }
+        else return 0;
+    }
+
+    public boolean updateCustomer(CustomerDto dto) throws SQLException {
+        ContactModel model = new ContactModel();
+        Connection connection = null;
+        try {
+            connection = DbConnection.getInstance().getConnection();
+            PreparedStatement pstm = connection.prepareStatement("UPDATE customer set name = ? , address = ? WHERE custId = ? ");
+            pstm.setString(1,dto.getCustomerName());
+            pstm.setString(2,dto.getCustomerAddress());
+            pstm.setString(3,dto.getCustomerId());
+            connection.setAutoCommit(false);
+            int i = pstm.executeUpdate();
+            if(i>0){
+                PreparedStatement pstm1 = connection.prepareStatement("INSERT INTO customer VALUES (?,?,?)");
+                pstm1.setString(1, ContactModel.generateContactId());
+                pstm1.setString(2,dto.getCustomerId());
+                pstm1.setString(3,dto.getCustomerContact());
+                int i1 = pstm1.executeUpdate();
+                if(i1>0){
+                    connection.commit();
+                }
+            }
+        } catch (SQLException e) {
+            connection.rollback();
+        }
+        finally {
+            connection.setAutoCommit(true);
+        }
+        return true;
+    }
 }

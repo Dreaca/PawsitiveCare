@@ -133,7 +133,7 @@ public class AddNewEmployeeFormController {
             new Alert(Alert.AlertType.WARNING,"Last name can not Include spaces or Numbers").show();
         } else if (!Pattern.matches("[A-Za-z0-9]&[/]",txtEmpAddress.getText())){
             new Alert(Alert.AlertType.WARNING,"Address Can't Include Special characters").show();
-        }else if(!Pattern.matches("",txtEmpContact.getText())){
+        }else if(!Pattern.matches("(0|94|\\+94)([1-7]([0-9]))[0-9]{7}",txtEmpContact.getText())){
             new Alert(Alert.AlertType.WARNING,"Contact wrong").show();
         }
         else if(!Pattern.matches("[0-9]{9}[V|v|x|X]|[0-9]{12}",txtEmpNIC.getText())){

@@ -9,14 +9,24 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import model.CustomerModel;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class CustomerFormController {
     public TextField txtCusAddress;
     public JFXButton btnClear;
+    public Label customerCount;
+    public Label lblDate;
+
+    public Label lblTime;
+
     @FXML
     private JFXButton btnDeleteCustomer;
 
@@ -63,9 +73,12 @@ public class CustomerFormController {
     private TextField txtCustomerLname;
 
     private CustomerModel customerModel = new CustomerModel();
-    public void initialize(){
+    public void initialize() throws SQLException {
         setCellValueFactory();
         loadAllCustomer();
+        lblTime.setText(String.valueOf(LocalDate.now()));
+        lblDate.setText(String.valueOf(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))));
+        customerCount.setText(String.valueOf(customerModel.getCount()));
     }
 
     private void loadAllCustomer() {
@@ -109,6 +122,15 @@ public class CustomerFormController {
         String name = txtCustomerFname.getText()+txtCustomerLname.getText();
         String address = txtCusAddress.getText();
         String contact = txtContactNo.getText();
+        CustomerDto dto = new CustomerDto(id,name,address,contact);
+        try {
+            if(customerModel.updateCustomer(dto)){
+                new Alert(Alert.AlertType.CONFIRMATION,"Customer Updated!!!").show();
+                loadAllCustomer();
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
+        }
 
     }
 
@@ -174,6 +196,11 @@ public class CustomerFormController {
 
     @FXML
     void customerSaveOnaction(ActionEvent event)  {
+        if (isNullOrEmpty(txtCustomerID) || isNullOrEmpty(txtCustomerFname) || isNullOrEmpty(txtCustomerLname)
+                || isNullOrEmpty(txtCusAddress) || isNullOrEmpty(txtContactNo)) {
+            new Alert(Alert.AlertType.ERROR, "Please fill in all fields").show();
+            return;
+        }
         String Id = txtCustomerID.getText();
         String Fname = txtCustomerFname.getText();
         String Lname = txtCustomerLname.getText();
@@ -251,5 +278,8 @@ public class CustomerFormController {
 
     public void clearOnAction(ActionEvent actionEvent) {
         clearFields();
+    }
+    private boolean isNullOrEmpty(TextField textField) {
+        return textField == null || textField.getText() == null || textField.getText().trim().isEmpty();
     }
 }

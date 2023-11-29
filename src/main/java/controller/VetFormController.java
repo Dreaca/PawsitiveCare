@@ -18,7 +18,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class VetFormController {
-    public AnchorPane root;
     public TextField txtLastName;
     public TextField txtFirstName;
     public TextField txtContact;
@@ -31,6 +30,7 @@ public class VetFormController {
     public TableColumn colEmail;
     public TextField txtEmail;
     public TableView tblVet;
+    public AnchorPane sidepane;
 
     private VetModel model = new VetModel();
     public void clearOnAction(ActionEvent actionEvent) {

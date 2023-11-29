@@ -89,6 +89,16 @@ public class PetModel {
         else return "P001";
     }
 
+    public String getPetCount() throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT COUNT(*) FROM pet ");
+        ResultSet resultSet = pstm.executeQuery();
+        if (resultSet.next()) {
+            return resultSet.getString(1);
+        }
+        else return String.valueOf(0);
+    }
+
     /*public static String[] getAllPetId() throws SQLException {
         List<PetDto> dto = new ArrayList<>();
         Connection connection = DbConnection.getInstance().getConnection();

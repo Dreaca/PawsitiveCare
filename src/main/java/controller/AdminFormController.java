@@ -7,14 +7,17 @@ import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import model.EmployeeModel;
 import model.LoginModel;
 
@@ -37,7 +40,6 @@ public class AdminFormController {
     public AnchorPane root;
     public JFXButton btnVet;
     public JFXButton btnCustomer;
-    public JFXButton btnReport;
     public JFXButton btnSupplier;
     public JFXButton btnStock;
     public Label adminName;
@@ -60,6 +62,7 @@ public class AdminFormController {
 
     @FXML
     private JFXButton btnUser;
+    private final Node dash = sidePane;
     private LoginModel Lmodel = new LoginModel();
     EmployeeModel model = new EmployeeModel();
     public void initialize() throws SQLException {
@@ -80,15 +83,6 @@ public class AdminFormController {
         Parent empNode = FXMLLoader.load(this.getClass().getResource("/view/employeeManage/ManageEmployee.fxml"));
         this.sidePane.getChildren().clear();
         this.sidePane.getChildren().add(empNode);
-
-    }
-
-    @FXML
-    void reportOnAction() throws IOException {
-        changeColor(btnReport);
-        Parent root = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/AdminDash/reportForm.fxml"));
-        this.sidePane.getChildren().clear();
-        this.sidePane.getChildren().add(root);
 
     }
 
@@ -147,11 +141,11 @@ public class AdminFormController {
         setDashBoard();
     }
     public void changeColor(JFXButton btn){
-        JFXButton btns[] = {btnReport,btnStock,btnSupplier,btnCustomer,btnEmployee,btnVet};
+        JFXButton btns[] = {btnStock,btnSupplier,btnCustomer,btnEmployee,btnVet};
         for (int i = 0; i < btns.length; i++) {
-            btn.setStyle("-fx-background-color : faa80a ;");
+            btn.setStyle("-fx-background-color : transparent ;"+"-fx-border-color : faa80a ;"+"-fx-border-radius : 40;"+"-fx-background-radius : 40;");
             if(!btn.equals(btns[i])){
-                btns[i].setStyle("-fx-background-color : white; ");
+                btns[i].setStyle("-fx-background-color : transparent; "+"-fx-border-color : transparent;"+"-fx-border-radius : 40;"+"-fx-background-radius : 40;");
             }
         }
     }
@@ -266,5 +260,20 @@ public class AdminFormController {
     public void updateNameOnAction(ActionEvent event) {
         txtNewUSerName.setVisible(true);
         btnUserName.setVisible(true);
+    }
+
+    public void exitOnAction(ActionEvent event) {
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.close();
+    }
+
+    public void logoutOnAction(ActionEvent event) throws IOException {
+        userBtnOnAction(event);
+    }
+
+    public void homeOnAction(ActionEvent event) throws IOException {
+        Stage window = (Stage) root.getScene().getWindow();
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/view/dashBoards/AdminDash/adminDash.fxml")));
+        window.setScene(scene);
     }
 }

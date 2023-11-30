@@ -1,12 +1,15 @@
 package controller;
 
 import Dto.PetDto;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.LightBase;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -14,6 +17,7 @@ import lombok.NoArgsConstructor;
 import model.CustomerModel;
 import model.PetModel;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -28,6 +32,7 @@ public class UpdatePetController implements Initializable {
     public TextField txtColor;
     public Label lblPetID;
     public String  petId;
+    public TextField txtAge;
 
     private PetModel model = new PetModel();
 
@@ -39,12 +44,13 @@ public class UpdatePetController implements Initializable {
     public void doneOnAction() throws SQLException {
         String id = lblPetID.getText();
         String name = txtPetName.getText();
+        int age = Integer.parseInt(txtAge.getText());
         String breed = (String) cmbBreed.getValue();
         String gender = cmbGender.getValue().toString();
         String ownerid = CustomerModel.getCustomerId(txtOwner.getText());
         String color = txtColor.getText();
 
-        var dto = new PetDto(id,name,breed,gender,ownerid,color);
+        var dto = new PetDto(id,name,age,breed,gender,ownerid,color);
         try {
             if (model.updatePet(dto)) {
                 new Alert(Alert.AlertType.CONFIRMATION,"Pet updated").show();
@@ -75,5 +81,16 @@ public class UpdatePetController implements Initializable {
     public void setPetId(String petId) {
         this.petId = petId;
         lblPetID.setText(petId);
+    }
+
+    public void addNewRecordOnAction(MouseEvent mouseEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/view/dashBoards/pets/addNewRecord.fxml"));
+        AnchorPane rot = loader.load();
+        AddNewRecordController controller = loader.getController();
+        controller.setPetID(lblPetID.getText());
+        Scene scene = new Scene(rot);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
 }

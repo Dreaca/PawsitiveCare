@@ -282,4 +282,8 @@ public class CustomerFormController {
     private boolean isNullOrEmpty(TextField textField) {
         return textField == null || textField.getText() == null || textField.getText().trim().isEmpty();
     }
+
+    public void clickOnAction(ActionEvent event) {
+        txtContact2nd.setDisable(false);
+    }
 }

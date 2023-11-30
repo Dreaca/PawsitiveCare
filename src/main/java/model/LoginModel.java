@@ -32,7 +32,7 @@ public class LoginModel {
             String [] newUser = userId.split("E");
             int num = Integer.parseInt(newUser[1]);
             num++;
-            return "E00"+num;
+            return String.format("E%03d",num);
         }else {
             return "E001";
         }

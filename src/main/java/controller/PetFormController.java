@@ -3,10 +3,13 @@ package controller;
 import Dto.PetDto;
 import Dto.Tm.PetTm;
 import com.jfoenix.controls.JFXButton;
+import com.lowagie.text.Anchor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -22,13 +25,15 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Arrays;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class PetFormController {
     public TableColumn colName;
     public TableColumn colId;
+    @FXML
+    private TableColumn<?, ?> colAge;
+
     public TableColumn colBreed;
     public TableColumn colGender;
     public TableColumn colOwner;
@@ -49,7 +54,7 @@ public class PetFormController {
     void loadAllData() {
         PetModel model = new PetModel();
         date.setText(String.valueOf(LocalDate.now()));
-        time.setText(String.valueOf(LocalTime.now()));
+        time.setText(String.valueOf(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))));
         ObservableList<PetTm> oblist = FXCollections.observableArrayList();
 
         try {
@@ -60,11 +65,12 @@ public class PetFormController {
                   new PetTm(
                           pet.getPetId(),
                           pet.getPetName(),
+                          pet.getAge(),
                           pet.getPetBreed(),
                           pet.getPetGender(),
                           pet.getColor(),
                           CustomerModel.getCustomerName(pet.getOwnerId()),
-                          null,
+                          getnewJfxBtn(),
                           getnewJfxBtn()
                   )
                 );
@@ -105,9 +111,32 @@ public class PetFormController {
                     throw new RuntimeException(e);
                 }
             });
+            int finalI4 = i;
+            oblist.get(i).getRecords().setOnAction(event -> {
+                try {
+                    loadRecordsPane(oblist.get(finalI4).getPetId());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         }
         tblPet.setItems(oblist);
         tblPet.refresh();
+    }
+
+    private void loadRecordsPane(String petId) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/dashBoards/pets/records.fxml"));
+        AnchorPane node = fxmlLoader.load();
+        RecordsController controller = fxmlLoader.getController();
+        try {
+            controller.takePetID(petId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        Scene scene = new Scene(node);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
 
     private JFXButton getnewJfxBtn() {
@@ -123,6 +152,7 @@ public class PetFormController {
     private void setCellValueFactory() {
         colId.setCellValueFactory(new PropertyValueFactory<>("petId"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colAge.setCellValueFactory(new PropertyValueFactory<>("Age"));
         colBreed.setCellValueFactory(new PropertyValueFactory<>("breed"));
         colGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
         colOwner.setCellValueFactory(new PropertyValueFactory<>("owner"));

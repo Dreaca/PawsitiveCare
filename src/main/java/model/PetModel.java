@@ -38,11 +38,11 @@ public class PetModel {
               new PetDto(
                       resultSet.getString(1),
                       resultSet.getString(2),
-                      resultSet.getString(3),
+                      resultSet.getInt(3),
                       resultSet.getString(4),
                       resultSet.getString(5),
-                      resultSet.getString(6)
-
+                      resultSet.getString(6),
+                      resultSet.getString(7)
               )
             );
         }
@@ -87,6 +87,7 @@ public class PetModel {
         return "P00"+id;
         }
         else return "P001";
+
     }
 
     public String getPetCount() throws SQLException {
@@ -97,6 +98,25 @@ public class PetModel {
             return resultSet.getString(1);
         }
         else return String.valueOf(0);
+    }
+
+    public PetDto getPetData(String petId) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT * FROM pet WHERE petId = ?");
+        pstm.setString(1,petId);
+        ResultSet resultSet = pstm.executeQuery();
+        if(resultSet.next()){
+            return new PetDto(
+              resultSet.getString(1),
+              resultSet.getString(2),
+              resultSet.getInt(3),
+              resultSet.getString(4),
+              resultSet.getString(5),
+              resultSet.getString(6),
+                    resultSet.getString(7)
+            );
+        }
+        return null;
     }
 
     /*public static String[] getAllPetId() throws SQLException {

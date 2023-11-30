@@ -16,7 +16,7 @@ public class VetModel {
         PreparedStatement pstm = connection.prepareStatement("INSERT INTO veterinarian VALUES(?,?,?,?,?)");
         pstm.setString(1,dto.getVetId());
         pstm.setString(2, dto.getVetName());
-        pstm.setString(3, "E001");
+        pstm.setString(3, "Admin");
         pstm.setString(4,dto.getContact());
         pstm.setString(5,dto.getEmail());
         int i = pstm.executeUpdate();

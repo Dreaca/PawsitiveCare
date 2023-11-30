@@ -86,7 +86,7 @@ public class AddNewEmployeeFormController {
     }
 
     @FXML
-    void btnSaveOnAction(String image) {
+    void btnSaveOnAction(ActionEvent event) {
         if(checkValidity()){
             String id = lblEmployeeID.getText();
             String name = txtEmpFirstNAme.getText() + " " + txtEmpLastName.getText();
@@ -98,7 +98,6 @@ public class AddNewEmployeeFormController {
             String newPw = txtPassword.getText();
             String confPw = txtConfirmPass.getText();
             String NIC = txtEmpNIC.getText();
-            String imagePath = image;
 
 
             var dto = new EmployeeDto(id, name, address, contact, salary, userId, NIC);
@@ -150,21 +149,6 @@ public class AddNewEmployeeFormController {
         return Objects.equals(newPw, confPw);
     }
 
-    @FXML
-    void btnUploadOnAction(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select Employee Image");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
-        );
-        Stage stage = (Stage) empImg.getScene().getWindow();
-        java.io.File selectedFile = fileChooser.showOpenDialog(stage);
-
-        if (selectedFile != null) {
-            btnSaveOnAction(selectedFile.getName());
-        }
-
-    }
 
     @FXML
     void onCheckPassWord(KeyEvent event) {
@@ -179,5 +163,8 @@ public class AddNewEmployeeFormController {
             txtConfirmPass.setStyle("-fx-text-fill: red;");
         }
     }
+    @FXML
+    void btnUploadOnAction(){
 
+    }
 }

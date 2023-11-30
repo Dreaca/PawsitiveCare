@@ -54,7 +54,7 @@
          <effect>
             <DropShadow />
          </effect></TextField>
-      <RadioButton fx:id="rdbtnCustomer2ndNum" layoutX="459.0" layoutY="173.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="287.0" text="Have a 2nd Number">
+      <RadioButton fx:id="rdbtnCustomer2ndNum" layoutX="459.0" layoutY="173.0" mnemonicParsing="false" onAction="#clickOnAction" prefHeight="31.0" prefWidth="287.0" text="Have a 2nd Number">
          <font>
             <Font name="Manjari Thin" size="15.0" />
          </font>
@@ -64,11 +64,11 @@
       </RadioButton>
       <TableView fx:id="tblCustomer" layoutX="216.0" layoutY="277.0" prefHeight="296.0" prefWidth="811.0" style="-fx-background-color: lightblue;">
         <columns>
-          <TableColumn fx:id="colCustomerID" prefWidth="65.0" text="CustomerID" />
-          <TableColumn fx:id="colCustomerName" minWidth="0.0" prefWidth="232.0" text="Name" />
-            <TableColumn fx:id="colCustomerAddress" prefWidth="199.0" text="Addresss" />
-            <TableColumn fx:id="colCustomerContact" prefWidth="149.0" text="Contact" />
-            <TableColumn fx:id="colCustomerPets" prefWidth="161.0" text="Pets" />
+          <TableColumn fx:id="colCustomerID" prefWidth="97.0" text="CustomerID" />
+          <TableColumn fx:id="colCustomerName" minWidth="0.0" prefWidth="247.0" text="Name" />
+            <TableColumn fx:id="colCustomerAddress" prefWidth="230.0" text="Addresss" />
+            <TableColumn fx:id="colCustomerContact" prefWidth="150.0" text="Contact" />
+            <TableColumn fx:id="colCustomerPets" prefWidth="86.0" text="Pets" />
         </columns>
          <effect>
             <DropShadow />
@@ -169,19 +169,14 @@
             <Image url="@../../Assets/icon/paw.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="294.0" fitWidth="242.0" layoutX="1087.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../Assets/image/20943930.jpg" />
-         </image>
-      </ImageView>
-      <AnchorPane layoutX="1087.0" layoutY="321.0" prefHeight="253.0" prefWidth="251.0" style="-fx-background-color: lightblue; -fx-border-radius: 180; -fx-background-radius: 180;">
+      <AnchorPane layoutX="1078.0" layoutY="14.0" prefHeight="253.0" prefWidth="251.0" style="-fx-background-color: lightblue; -fx-border-radius: 180; -fx-background-radius: 180;">
          <children>
-            <Label fx:id="lblDate" layoutX="42.0" layoutY="150.0" prefHeight="30.0" prefWidth="173.0" text="Date">
+            <Label fx:id="lblDate" layoutX="89.0" layoutY="150.0" prefHeight="30.0" prefWidth="95.0" text="Time">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label fx:id="lblTime" layoutX="44.0" layoutY="63.0" prefHeight="30.0" prefWidth="173.0" text="Time">
+            <Label fx:id="lblTime" layoutX="39.0" layoutY="63.0" prefHeight="30.0" prefWidth="173.0" text="Date">
                <font>
                   <Font size="24.0" />
                </font>

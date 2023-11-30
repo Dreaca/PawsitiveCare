@@ -70,4 +70,26 @@ public class AppointmentModel {
         }
         return dto;
     }
+
+    public String count(AppointmentDto.AppType type) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT COUNT(*) FROM appointment WHERE type = ?");
+        pstm.setString(1, String.valueOf(type));
+        ResultSet resultSet = pstm.executeQuery();
+        if(resultSet.next()){
+            return resultSet.getString(1);
+        }
+    else return "0";
+    }
+
+    public String countAll() throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT COUNT(*) FROM appointment");
+        ResultSet resultSet = pstm.executeQuery();
+        if(resultSet.next()){
+            return resultSet.getString(1);
+        }
+        else return "0";
+
+    }
 }

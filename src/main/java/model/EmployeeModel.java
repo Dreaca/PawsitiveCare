@@ -183,4 +183,29 @@ public class EmployeeModel {
         int i = pstm.executeUpdate();
         return i>0;
     }
+
+    public List<String> getEmpIDs() throws SQLException {
+        List<String> list = new ArrayList<>();
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT employeeId FROM employee ");
+        ResultSet resultSet = pstm.executeQuery();
+        while (resultSet.next()){
+            list.add(resultSet.getString(1));
+        }
+        return list;
+    }
+
+    public boolean updateEmployee(EmployeeDto dto) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("UPDATE employee SET name = ?. address = ?, contact = ? , salary = ? , userId = ?, NIC = ? WHERE employeeId = ?");
+        pstm.setString(1,dto.getName());
+        pstm.setString(2,dto.getAddress());
+        pstm.setString(3,dto.getContact());
+        pstm.setDouble(4,dto.getSalary());
+        pstm.setString(5,dto.getUserId());
+        pstm.setString(6,dto.getNIC());
+        pstm.setString(7,dto.getEmpId());
+        int i = pstm.executeUpdate();
+        return i>0;
+    }
 }

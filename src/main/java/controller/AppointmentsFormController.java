@@ -9,9 +9,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.AppointmentModel;
 
@@ -27,10 +29,24 @@ public class AppointmentsFormController {
     public TableColumn colContact;
     public TableColumn colType;
     public TableColumn colPrice;
+    public Label appointmentCount;
+    public Label vaccineCount;
+    public Label surgeryCount;
+    public Label checkupCount;
+    public AnchorPane stuff;
 
-    public void initialize(){
+    public void initialize() throws SQLException {
+        loadCounters();
         setCellValueFactory();
         loadAllAppointments();
+    }
+
+    private void loadCounters() throws SQLException {
+        AppointmentModel model = new AppointmentModel();
+        checkupCount.setText(model.count(AppType.CHECKUP));
+        vaccineCount.setText(model.count(AppType.VACCINATION));
+        surgeryCount.setText(model.count(AppType.SURGERY));
+        appointmentCount.setText(model.countAll());
     }
 
     private void loadAllAppointments() {

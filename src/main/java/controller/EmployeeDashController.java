@@ -25,6 +25,9 @@ public class EmployeeDashController {
     public JFXButton btnOrders;
     public AnchorPane sidePane;
 
+    public void initialize() throws IOException {
+        appointmentsOnAction();
+    }
     @FXML
     public void logoutOnAction() throws IOException {
         Alert logout = new Alert(Alert.AlertType.CONFIRMATION);
@@ -50,7 +53,7 @@ public class EmployeeDashController {
     }
 
     @FXML
-    void appointmentsOnAction(ActionEvent event) throws IOException {
+    void appointmentsOnAction() throws IOException {
         changeButtonColor(btnAppointments);
         Parent parent = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/EmployeeDash/appointmentsForm.fxml"));
         this.sidePane.getChildren().clear();
@@ -61,9 +64,9 @@ public class EmployeeDashController {
     private void changeButtonColor(JFXButton btn) {
         JFXButton[] buttons = {btnAppointments,btnCustomer,btnOrders,btnPets,btnSchedule};
         for (int i = 0; i < buttons.length; i++) {
-            btn.setStyle("-fx-background-color : ffbe4f;");
+            btn.setStyle("-fx-border-color : ffbe4f;"+"-fx-background-radius : 20;"+"-fx-border-radius : 20");
             if(!btn.equals(buttons[i])) {
-                buttons[i].setStyle("-fx-background-color : white;");
+                buttons[i].setStyle("-fx-border-color : transparent;");
             }
         }
     }

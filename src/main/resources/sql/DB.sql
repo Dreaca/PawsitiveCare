@@ -56,6 +56,7 @@ create table appointment(
 create table pet(
 	petId varchar(10) primary key not null,
 	name varchar(20) not null,
+	age int not null,
 	breed varchar(10) not null,
 	gender ENUM('Male','Female') not null,
 	color varchar (20) not null,
@@ -65,8 +66,7 @@ create table pet(
 create table record(
 	petId varchar(10),
 	recordId varchar(10) primary key not null,
-	description varchar(20),
-	detail blob,
+	description varchar(50),
 	date date,
 	constraint foreign key(petId) references pet(petId) on update cascade on delete cascade
 	);

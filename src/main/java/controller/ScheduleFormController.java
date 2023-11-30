@@ -1,6 +1,7 @@
 package controller;
 
 import Db.DbConnection;
+import Dto.AppointmentDto;
 import Dto.ScheduleDto;
 import Dto.Tm.ScheduleTm;
 import com.jfoenix.controls.JFXButton;
@@ -9,12 +10,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import model.AppointmentModel;
 import model.ScheduleModel;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -39,6 +42,9 @@ public class ScheduleFormController {
     public TableView tblSchedule;
 
     public  ScheduleModel model = new ScheduleModel();
+    public Label vaccineCount;
+    public Label surgCount;
+    public Label checkupCount;
 
     ObservableList<ScheduleTm> oblist = FXCollections.observableArrayList();
     public void initialize() throws SQLException {
@@ -85,6 +91,10 @@ public class ScheduleFormController {
     public void loadData(){
 
         try {
+            var Amodel = new AppointmentModel();
+            vaccineCount.setText(Amodel.count(AppointmentDto.AppType.VACCINATION));
+            surgCount.setText(Amodel.count(AppointmentDto.AppType.SURGERY));
+            checkupCount.setText(Amodel.count(AppointmentDto.AppType.CHECKUP));
             List<ScheduleDto> list = model.getScheduleData();
             for (ScheduleDto d: list) {
                 oblist.add(

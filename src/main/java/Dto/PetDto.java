@@ -10,6 +10,7 @@ import lombok.*;
 public class PetDto {
     private String petId;
     private String petName;
+    private int age;
     private String petBreed;
     private String petGender;
     private String ownerId;

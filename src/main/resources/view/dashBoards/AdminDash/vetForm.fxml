@@ -50,11 +50,11 @@
          </graphic></JFXButton>
       <TextField fx:id="txtID" layoutX="139.0" layoutY="27.0" onAction="#searchVetOnAction" prefHeight="41.0" prefWidth="332.0" promptText="Id" />
       <TextField fx:id="txtEmail" layoutX="179.0" layoutY="141.0" prefHeight="41.0" prefWidth="864.0" promptText="Email" />
-      <Label fx:id="idnotValid" layoutX="139.0" layoutY="10.0" text="* Id not valid" textFill="#f20a0a" />
-      <Label fx:id="fnameNotValid" layoutX="639.0" layoutY="14.0" text="*First name not valid" textFill="#e81010" />
-      <Label fx:id="lastNameNotValid" layoutX="178.0" layoutY="66.0" text="* last name not valid" textFill="#f20808" />
-      <Label fx:id="contactNotValid" layoutX="672.0" layoutY="65.0" text="* Contact not valid" textFill="#e40c0c" />
-      <Label fx:id="emailNotValid" layoutX="179.0" layoutY="123.0" text="* email not valid" textFill="#eb0808" />
+      <Label fx:id="idnotValid" layoutX="139.0" layoutY="10.0" text="* Id not valid" textFill="#f20a0a" visible="false" />
+      <Label fx:id="fnameNotValid" layoutX="639.0" layoutY="14.0" text="*First name not valid" textFill="#e81010" visible="false" />
+      <Label fx:id="lastNameNotValid" layoutX="178.0" layoutY="66.0" text="* last name not valid" textFill="#f20808" visible="false" />
+      <Label fx:id="contactNotValid" layoutX="672.0" layoutY="65.0" text="* Contact not valid" textFill="#e40c0c" visible="false" />
+      <Label fx:id="emailNotValid" layoutX="179.0" layoutY="123.0" text="* email not valid" textFill="#eb0808" visible="false" />
       <Label layoutX="56.0" layoutY="35.0" text="Vet ID :">
          <font>
             <Font size="19.0" />

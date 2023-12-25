@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -24,6 +25,9 @@ public class EmployeeDashController {
     public JFXButton btnOrders;
     public AnchorPane sidePane;
 
+    public void initialize() throws IOException {
+        appointmentsOnAction();
+    }
     @FXML
     public void logoutOnAction() throws IOException {
         Alert logout = new Alert(Alert.AlertType.CONFIRMATION);
@@ -49,15 +53,27 @@ public class EmployeeDashController {
     }
 
     @FXML
-    void appointmentsOnAction(ActionEvent event) throws IOException {
+    void appointmentsOnAction() throws IOException {
+        changeButtonColor(btnAppointments);
         Parent parent = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/EmployeeDash/appointmentsForm.fxml"));
         this.sidePane.getChildren().clear();
         this.sidePane.getChildren().add(parent);
 
     }
 
+    private void changeButtonColor(JFXButton btn) {
+        JFXButton[] buttons = {btnAppointments,btnCustomer,btnOrders,btnPets,btnSchedule};
+        for (int i = 0; i < buttons.length; i++) {
+            btn.setStyle("-fx-border-color : ffbe4f;"+"-fx-background-radius : 20;"+"-fx-border-radius : 20");
+            if(!btn.equals(buttons[i])) {
+                buttons[i].setStyle("-fx-border-color : transparent;");
+            }
+        }
+    }
+
     @FXML
     void customerOnAction(ActionEvent event) throws IOException {
+        changeButtonColor(btnCustomer);
         Parent parent = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/common/customerForm.fxml"));
         this.sidePane.getChildren().clear();
         this.sidePane.getChildren().add(parent);
@@ -65,22 +81,34 @@ public class EmployeeDashController {
 
     @FXML
     void ordersOnAction(ActionEvent event) throws IOException {
+        changeButtonColor(btnOrders);
         Parent parent = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/EmployeeDash/orderForm.fxml"));
         this.sidePane.getChildren().clear();
         this.sidePane.getChildren().add(parent);
     }
     @FXML
     void petOnAction(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/EmployeeDash/petForm.fxml"));
+        changeButtonColor(btnPets);
+        Parent parent = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/pets/petForm.fxml"));
         this.sidePane.getChildren().clear();
         this.sidePane.getChildren().add(parent);
     }
 
     @FXML
     void scheduleOnAction(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/EmployeeDash/petForm.fxml"));
+        changeButtonColor(btnSchedule);
+        Parent parent = FXMLLoader.load(this.getClass().getResource("/view/dashBoards/EmployeeDash/scheduleForm.fxml"));
         this.sidePane.getChildren().clear();
         this.sidePane.getChildren().add(parent);
+    }
+
+    public void setUserName(String userName) {
+        btnUser.setText(userName);
+    }
+
+    public void exitOnAction(ActionEvent event) {
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.close();
     }
 }
 

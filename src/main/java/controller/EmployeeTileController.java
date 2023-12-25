@@ -1,9 +1,17 @@
 package controller;
 
 import Dto.EmployeeDto;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import model.EmployeeModel;
+import model.LoginModel;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.sql.SQLException;
 
 public class EmployeeTileController {
     public ImageView imgEmpImg;
@@ -14,14 +22,27 @@ public class EmployeeTileController {
     public Label lblUserId;
     public Label lblSalary;
 
-    public void setEmployeeData(EmployeeDto employee) {
-        //imgEmpImg.setImage(new Image(String.valueOf(employee.getPhoto())));
+    public Label lblNIC;
+
+    public void setEmployeeData(EmployeeDto employee) throws FileNotFoundException {
         lblEmpId.setText(employee.getEmpId());
         lblEmpName.setText(employee.getName());
         lblAddress.setText(employee.getAddress());
         lblContact.setText(employee.getContact());
         lblSalary.setText(String.valueOf(employee.getSalary()));
         lblUserId.setText(employee.getUserId());
+        lblNIC.setText(employee.getNIC());
+        imgEmpImg.setImage(new Image("/view/Assets/image/veterinary.png"));
+    }
+
+    public void deleteOnAction(ActionEvent actionEvent) throws SQLException {
+        String empId = lblEmpId.getText();
+            boolean b = EmployeeModel.deleteEmployee(empId);
+        if (b) {
+            new Alert(Alert.AlertType.INFORMATION,"Employee Deleted").show();
+        }else {
+            new Alert(Alert.AlertType.ERROR,"Employee Not Deleted").show();
+        }
 
     }
 }

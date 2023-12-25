@@ -2,19 +2,16 @@ package model;
 
 import Db.DbConnection;
 import Dto.EmployeeDto;
-import controller.EmployeeTileController;
 import javafx.scene.image.Image;
 
-import java.io.ByteArrayInputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeModel {
-    private String empId;
     private String name;
     private String address;
     private String contact;
@@ -23,53 +20,115 @@ public class EmployeeModel {
     private  String userId;
     private static Image photo;
 
-    public EmployeeModel(String empId, String name, String address, String contact, double salary, String userId, Image photo) {
-        this.empId = empId;
-        this.name = name;
-        this.address = address;
-        this.contact = contact;
-        this.salary = salary;
-        this.userId = userId;
-        this.photo = photo;
-    }
-
     public EmployeeModel() {
     }
 
     public static List<EmployeeDto> getEmployeeDtos() throws SQLException {
-        List<EmployeeDto> employeeDtos = new ArrayList<>();
         String sql = "SELECT * FROM employee";
         Connection connection = DbConnection.getInstance().getConnection();
         PreparedStatement pstm = connection.prepareStatement(sql);
         ResultSet resultSet = pstm.executeQuery();
-        while (resultSet.next()){
-            EmployeeDto emp = new EmployeeDto();
-            emp.setEmpId(resultSet.getString("employeeId"));
-            emp.setAddress(resultSet.getString("address"));
-            emp.setName(resultSet.getString("name"));
-            emp.setContact(resultSet.getString("contact"));
-            emp.setSalary(resultSet.getDouble("salary"));
-            emp.setUserId(resultSet.getString("userId"));
-            byte[] photobyte = resultSet.getBytes("photo");
-            if (photobyte != null){
-                ByteArrayInputStream bt = new ByteArrayInputStream(photobyte);
-                photo = new Image(bt);
-                emp.setPhoto(photo);
-            }
-            employeeDtos.add(emp);
-            resultSet.close();
-            return employeeDtos;
+
+        ArrayList<EmployeeDto> employeeDtos = new ArrayList<>();
+
+        while (resultSet.next()) {
+            employeeDtos.add(
+                    new EmployeeDto(
+                            resultSet.getString(1),
+                            resultSet.getString(2),
+                            resultSet.getString(3),
+                            resultSet.getString(4),
+                            resultSet.getDouble(5),
+                            resultSet.getString(6),
+                            resultSet.getString(7)
+                    )
+            );
         }
 
-        return null;
+        return employeeDtos;
     }
 
-    public String getEmpId() {
-        return empId;
+
+
+    public static String generateNextEmpId() throws SQLException {
+        String sql = "SELECT * FROM employee ORDER BY employeeID DESC LIMIT 1 ";
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        ResultSet resultSet = pstm.executeQuery();
+        if (resultSet.next()){
+            return splitEmpID(resultSet.getString(1));
+        }else {
+            return splitEmpID(null);
+        }
     }
 
-    public void setEmpId(String empId) {
-        this.empId = empId;
+    private static String splitEmpID(String empId) {
+        if( empId != null ){
+            String [] id = empId.split("E");
+            int num = Integer.parseInt(id[1]);
+            num++;
+            return "E00"+num;
+        }else {
+            return "E001";
+        }
+    }
+
+    public static boolean  deleteEmployee(String empId) throws SQLException {
+        boolean flag = false;
+        Connection connection = DbConnection.getInstance().getConnection();;
+        try {
+            connection.setAutoCommit(false);
+
+            String userId = EmployeeModel.getEmployee(empId);
+            PreparedStatement pstm = connection.prepareStatement("DELETE FROM employee WHERE employeeId = ?");
+            pstm.setString(1,empId);
+            int i = pstm.executeUpdate();
+            if(i > 0){
+                boolean b = LoginModel.deleteUser(userId);
+                if (b) {
+                    flag = b;
+                    connection.commit();
+                }
+            }
+        } catch (SQLException e) {
+            connection.rollback();
+        }
+        finally {
+            connection.setAutoCommit(true);
+        }
+        return flag;
+    }
+
+    private static String getEmployee(String empId) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT userId FROM employee WHERE employeeId = ?");
+        pstm.setString(1,empId);
+        ResultSet resultSet = pstm.executeQuery();
+        if (resultSet.next()){
+            return resultSet.getString("userId");
+        }else {
+            return null;
+        }
+    }
+
+    public static EmployeeDto getEmployeeDetails(String userId) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT * FROM employee WHERE userId = ?");
+        pstm.setString(1,userId);
+        ResultSet resultSet = pstm.executeQuery();
+        if (resultSet.next()) {
+            return new EmployeeDto(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getDouble(5),
+                    resultSet.getString(6),
+                    resultSet.getString(7)
+
+            );
+        }
+        else return null;
     }
 
     public String getName() {
@@ -80,13 +139,6 @@ public class EmployeeModel {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public String getContact() {
         return contact;
@@ -96,27 +148,64 @@ public class EmployeeModel {
         this.contact = contact;
     }
 
-    public double getSalary() {
-        return salary;
+    public boolean saveEmployee(EmployeeDto dto) throws SQLException, FileNotFoundException {
+        String sql = "INSERT INTO employee VALUES(?,?,?,?,?,?,?,?)";
+
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement(sql);
+
+        pstm.setString(1,dto.getEmpId());
+        pstm.setString(2,dto.getName());
+        pstm.setString(3,dto.getAddress());
+        pstm.setString(4,dto.getContact());
+        pstm.setDouble(5,dto.getSalary());
+        pstm.setString(6,dto.getUserId());
+        pstm.setString(7, dto.getNIC());
+
+        int i = pstm.executeUpdate();
+        return i > 0;
     }
 
-    public void setSalary(double salary) {
-        this.salary = salary;
+    public boolean updateName(String name, String userId) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("UPDATE employee SET name = ? WHERE userId = ?");
+        pstm.setString(1,name);
+        pstm.setString(2,userId);
+        int i = pstm.executeUpdate();
+        return i > 0;
     }
 
-    public String getUserId() {
-        return userId;
+    public boolean UpdateNIC(String userId, String nic) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("UPDATE employee SET NIC = ? WHERE userId = ?");
+        pstm.setString(1,nic);
+        pstm.setString(2,userId);
+        int i = pstm.executeUpdate();
+        return i>0;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public List<String> getEmpIDs() throws SQLException {
+        List<String> list = new ArrayList<>();
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("SELECT employeeId FROM employee ");
+        ResultSet resultSet = pstm.executeQuery();
+        while (resultSet.next()){
+            list.add(resultSet.getString(1));
+        }
+        return list;
     }
 
-    public Image getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(Image photo) {
-        this.photo = photo;
+    public boolean updateEmployee(EmployeeDto dto) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("UPDATE employee SET name = ?. address = ?, contact = ? , salary = ? , userId = ?, NIC = ? WHERE employeeId = ?");
+        pstm.setString(1,dto.getName());
+        pstm.setString(2,dto.getAddress());
+        pstm.setString(3,dto.getContact());
+        pstm.setDouble(4,dto.getSalary());
+        pstm.setString(5,dto.getUserId());
+        pstm.setString(6,dto.getNIC());
+        pstm.setString(7,dto.getEmpId());
+        int i = pstm.executeUpdate();
+        return i>0;
     }
 }

@@ -14,6 +14,8 @@ create table veterinarian(
 	vetId varchar(10) primary key not null,
 	name varchar(35) not null,
 	userId varchar(10) not null,
+	contact varchar(20) not null,
+	email varchar(30),
 	foreign key (userId) references user(userId) on update cascade on delete cascade
 	);
 
@@ -47,21 +49,24 @@ create table appointment(
 	custId varchar(10) not null,
 	type ENUM('Checkup','Surgery','Vaccination') not null,
 	time time(2),
-	date date,
+	date varchar(20),
+	price double,
 	constraint foreign key (custId) references customer(custId) on update cascade on delete cascade
 	);
 create table pet(
 	petId varchar(10) primary key not null,
 	name varchar(20) not null,
+	age int not null,
 	breed varchar(10) not null,
 	gender ENUM('Male','Female') not null,
+	color varchar (20) not null,
 	custId varchar(10) not null,
 	constraint foreign key (custId) references customer(custId) on update cascade on delete cascade
 	);
 create table record(
 	petId varchar(10),
 	recordId varchar(10) primary key not null,
-	detail blob,
+	description varchar(50),
 	date date,
 	constraint foreign key(petId) references pet(petId) on update cascade on delete cascade
 	);
@@ -89,14 +94,15 @@ create table supplier(
 	suppId varchar(10) primary key not null,
 	location varchar(10),
 	name varchar(30) not null,
+	type varchar(30) not null,
 	contact varchar(20)
 	);
 create table item_supplier(
+    suppOrderId varchar(10) primary key,
 	itemId varchar(10),
 	suppId varchar(10),
 	qty int,
 	date date,
-	marketPrice float,
 	constraint foreign key(itemId) references item(itemId) on update cascade on delete cascade,
 	constraint foreign key (suppId) references supplier(suppId) on update cascade on delete cascade
 );
@@ -108,5 +114,7 @@ create table employee(
     contact varchar(25),
     salary double,
     userId varchar(10),
+    NIC varchar (50),
+    image mediumblob,
     constraint foreign key (userId) references user(userId) on update cascade on delete cascade
 );

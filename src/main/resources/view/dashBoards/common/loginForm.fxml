@@ -1,14 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginFormController">
+<AnchorPane fx:id="root" prefHeight="600.0" prefWidth="791.0" style="-fx-background-image: url(&quot;view/Assets/image/puppy.jpg&quot;);" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginFormController">
    <children>
-      <TextField fx:id="txtUserNAme" layoutX="439.0" layoutY="197.0" prefHeight="58.0" prefWidth="505.0" promptText="user name" />
-      <JFXButton fx:id="btnLogin" buttonType="RAISED" layoutX="563.0" layoutY="395.0" onAction="#loginOnAction" prefHeight="74.0" prefWidth="214.0" ripplerFill="#09afe5" style="-fx-background-color: aqua; -fx-background-radius: 25;" text="Login" />
-      <PasswordField fx:id="txtPassword" layoutX="441.0" layoutY="284.0" prefHeight="66.0" prefWidth="503.0" promptText="Password" />
+      <Hyperlink fx:id="hyperForgotPass" layoutX="328.0" layoutY="404.0" onAction="#forgotPassOnAction" prefHeight="22.0" prefWidth="168.0" text="Forgot Password?" visible="false" />
+      <Label fx:id="lblEnterNIC" layoutX="210.0" layoutY="432.0" text="Enter the last 4 digits for your NIC number" textFill="WHITE" visible="false">
+         <font>
+            <Font name="Manjari Thin" size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtNICDigit" layoutX="212.0" layoutY="474.0" onAction="#checkNIConAction" prefHeight="24.0" prefWidth="356.0" visible="false" />
+      <ImageView fitHeight="44.0" fitWidth="53.0" layoutX="165.0" layoutY="210.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Assets/icon/paw.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="txtUserNAme" layoutX="213.0" layoutY="214.0" prefHeight="39.0" prefWidth="374.0" promptText="User name" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: black; -fx-background-color: transparent;">
+         <font>
+            <Font name="Manjari Thin" size="18.0" />
+         </font>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+            </Lighting>
+         </effect>
+      </TextField>
+      <PasswordField fx:id="txtPassword" layoutX="215.0" layoutY="275.0" prefHeight="5.0" prefWidth="374.0" promptText="Password" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: black; -fx-background-color: transparent;">
+         <font>
+            <Font name="Manjari Thin" size="18.0" />
+         </font>
+      </PasswordField>
+      <ImageView fitHeight="39.0" fitWidth="46.0" layoutX="169.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Assets/icon/veterinary.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="198.0" layoutY="66.0" text="Welcome to" textFill="WHITE">
+         <font>
+            <Font name="Manjari Thin" size="26.0" />
+         </font>
+      </Label>
+      <Label layoutX="254.0" layoutY="67.0" prefHeight="100.0" prefWidth="287.0" text="Pawsitive Care" textAlignment="CENTER" textFill="#faa80a" wrapText="true">
+         <font>
+            <Font name="NATS" size="53.0" />
+         </font>
+      </Label>
+      <Label fx:id="incorrect" disable="true" layoutX="193.0" layoutY="178.0" prefHeight="29.0" prefWidth="392.0" text="* Password or Username is Incorrect" textFill="#eb0808" underline="true">
+         <effect>
+            <Glow />
+         </effect>
+      </Label>
+      <Label layoutX="462.0" layoutY="138.0" text="Take care of your pets" textFill="WHITE">
+         <font>
+            <Font name="Manjari Thin" size="18.0" />
+         </font>
+      </Label>
+      <Line endX="89.0" layoutX="347.0" layoutY="151.0" startX="-91.0" stroke="#faa80a" strokeWidth="3.0" />
+      <Line endX="89.0" layoutX="443.0" layoutY="88.0" startX="-91.0" stroke="#faa80a" strokeWidth="3.0" />
+      <JFXButton fx:id="btnLogin" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="348.0" layoutY="341.0" onAction="#loginOnAction" prefHeight="91.0" prefWidth="31.0" ripplerFill="#16f048e5" style="-fx-background-color: faa80a; -fx-background-radius: 180; -fx-border-radius: 180;" wrapText="true">
+         <font>
+            <Font size="27.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="61.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Assets/icon/paw.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <Label layoutX="378.0" layoutY="439.0" text="Login" textFill="WHITE">
+         <font>
+            <Font name="Manjari Thin" size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

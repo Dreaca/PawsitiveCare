@@ -1,27 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="749.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VetFormController">
+<AnchorPane fx:id="sidepane" prefHeight="615.0" prefWidth="1341.0" stylesheets="@../CSS/sidePane.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VetFormController">
    <children>
-      <TextField fx:id="txtLastName" layoutX="195.0" layoutY="127.0" prefHeight="41.0" prefWidth="241.0" promptText="Last Name" />
-      <TextField fx:id="txtFirstName" layoutX="644.0" layoutY="34.0" prefHeight="41.0" prefWidth="241.0" promptText="First Name" />
-      <TextField fx:id="txtContact" layoutX="644.0" layoutY="123.0" prefHeight="41.0" prefWidth="241.0" promptText="Contact" />
-      <TableView layoutX="22.0" layoutY="308.0" prefHeight="200.0" prefWidth="1000.0">
+      <TextField fx:id="txtLastName" layoutX="177.0" layoutY="82.0" prefHeight="41.0" prefWidth="377.0" promptText="Last Name" />
+      <TextField fx:id="txtFirstName" layoutX="639.0" layoutY="28.0" prefHeight="41.0" prefWidth="406.0" promptText="First Name" />
+      <TextField fx:id="txtContact" layoutX="673.0" layoutY="80.0" prefHeight="41.0" prefWidth="372.0" promptText="Contact" />
+      <TableView fx:id="tblVet" layoutX="52.0" layoutY="230.0" prefHeight="361.0" prefWidth="998.0" style="-fx-background-color: lightblue;">
         <columns>
-          <TableColumn fx:id="tblColVetId" prefWidth="144.0" text="VetID" />
-          <TableColumn fx:id="tblColName" prefWidth="458.6666259765625" text="Name" />
-            <TableColumn fx:id="tblColContact" prefWidth="247.0" text="Contact" />
-            <TableColumn fx:id="tblColSchedule" prefWidth="152.0" text="Schedule" />
+          <TableColumn fx:id="tblColVetId" prefWidth="92.0" text="VetID" />
+          <TableColumn fx:id="tblColName" prefWidth="278.3333435058594" text="Name" />
+            <TableColumn fx:id="tblColContact" prefWidth="120.0" text="Contact" />
+            <TableColumn fx:id="colEmail" prefWidth="370.33331298828125" text="Email" />
+            <TableColumn fx:id="tblColSchedule" prefWidth="137.66668701171875" text="Schedule" />
         </columns>
       </TableView>
-      <JFXButton fx:id="btnClear" buttonType="RAISED" layoutX="605.0" layoutY="247.0" onAction="#clearOnAction" prefHeight="55.0" prefWidth="108.0" style="-fx-background-color: yellow;" text="Clear" />
-      <JFXButton buttonType="RAISED" layoutX="729.0" layoutY="246.0" prefHeight="54.0" prefWidth="124.0" style="-fx-background-color: red;" text="Delete" />
-      <JFXButton buttonType="RAISED" layoutX="866.0" layoutY="244.0" prefHeight="54.0" prefWidth="124.0" style="-fx-background-color: lime;" text="Save" />
-      <TextField fx:id="txtID" layoutX="194.0" layoutY="33.0" prefHeight="41.0" prefWidth="241.0" promptText="Id" />
+      <JFXButton fx:id="btnClear" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="910.0" layoutY="192.0" onAction="#clearOnAction" prefHeight="33.0" prefWidth="24.0" style="-fx-background-color: transparent;" text=" ">
+         <graphic>
+            <ImageView fitHeight="38.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Assets/icon/refresh.png" />
+               </image></ImageView>
+         </graphic></JFXButton>
+      <JFXButton buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="954.0" layoutY="187.0" onAction="#deleteOnAction" prefHeight="41.0" prefWidth="35.0" style="-fx-background-color: transparent;" text=" ">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Assets/icon/delete.png" />
+               </image></ImageView>
+         </graphic></JFXButton>
+      <JFXButton buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="997.0" layoutY="190.0" onAction="#saveOnAction" prefHeight="31.0" prefWidth="31.0" style="-fx-background-color: transparent;" text=" ">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Assets/icon/diskette.png" />
+               </image>
+            </ImageView>
+         </graphic></JFXButton>
+      <TextField fx:id="txtID" layoutX="139.0" layoutY="27.0" onAction="#searchVetOnAction" prefHeight="41.0" prefWidth="332.0" promptText="Id" />
+      <TextField fx:id="txtEmail" layoutX="179.0" layoutY="141.0" prefHeight="41.0" prefWidth="864.0" promptText="Email" />
+      <Label fx:id="idnotValid" layoutX="139.0" layoutY="10.0" text="* Id not valid" textFill="#f20a0a" visible="false" />
+      <Label fx:id="fnameNotValid" layoutX="639.0" layoutY="14.0" text="*First name not valid" textFill="#e81010" visible="false" />
+      <Label fx:id="lastNameNotValid" layoutX="178.0" layoutY="66.0" text="* last name not valid" textFill="#f20808" visible="false" />
+      <Label fx:id="contactNotValid" layoutX="672.0" layoutY="65.0" text="* Contact not valid" textFill="#e40c0c" visible="false" />
+      <Label fx:id="emailNotValid" layoutX="179.0" layoutY="123.0" text="* email not valid" textFill="#eb0808" visible="false" />
+      <Label layoutX="56.0" layoutY="35.0" text="Vet ID :">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="517.0" layoutY="35.0" text="First Name : ">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="56.0" layoutY="89.0" text="Last Name : ">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="582.0" layoutY="88.0" text="Contact : ">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="55.0" layoutY="144.0" text="Last Name : ">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="datelbl" layoutX="1117.0" layoutY="30.0" text="Date">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Label fx:id="timelbl" layoutX="1163.0" layoutY="84.0" text="Time">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Separator layoutX="1074.0" layoutY="74.0" prefHeight="4.0" prefWidth="246.0" />
+      <Separator layoutX="1074.0" layoutY="122.0" prefHeight="4.0" prefWidth="246.0" />
+      <Separator layoutX="1074.0" layoutY="26.0" prefHeight="4.0" prefWidth="246.0" />
    </children>
+   <effect>
+      <Blend />
+   </effect>
 </AnchorPane>

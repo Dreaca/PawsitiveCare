@@ -1,24 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="employeeAnchor" prefHeight="749.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ManageEmployeeController">
-   <children>
-      <VBox fx:id="empVbox" layoutX="14.0" layoutY="79.0" prefHeight="639.0" prefWidth="1009.0">
+<AnchorPane fx:id="employeeAnchor" prefHeight="749.0" prefWidth="1341.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ManageEmployeeController">
+    <children>
+        <JFXButton fx:id="btnAddEmployee" buttonType="RAISED" layoutX="961.0" layoutY="36.0" onAction="#addnewEmployee" prefHeight="52.0" prefWidth="194.0" style="-fx-background-color: linear-gradient(to bottom, #d2a172, #faa80a);;" text="Add new Employee" textFill="#f5eded">
+         <graphic>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Assets/icon/employee.png" />
+               </image>
+            </ImageView>
+         </graphic></JFXButton>
+        <JFXButton fx:id="btnUpdateEmployee" buttonType="RAISED" layoutX="1169.0" layoutY="36.0" onAction="#updateOnAction" prefHeight="51.0" prefWidth="113.0" style="-fx-background-color: linear-gradient(to bottom, #d2a172, #faa80a);;" text="Update" textFill="#fcf3f3">
+         <graphic>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Assets/icon/refresh.png" />
+               </image>
+            </ImageView>
+         </graphic></JFXButton>
+      <VBox layoutX="41.0" layoutY="108.0" prefHeight="546.0" prefWidth="1261.0">
          <children>
-            <!-- Smaller card-like layout inside an AnchorPane -->
-            <HBox fx:id="employeeHbox" prefHeight="363.0" prefWidth="1009.0" style="-fx-background-radius: 25;">
-               <children>
-                  <AnchorPane fx:id="employeeCard" prefHeight="363.0" prefWidth="353.0" style="-fx-background-color: white;" />
-               </children>
+            <HBox fx:id="employeeHbox" alignment="CENTER" prefHeight="300.0" prefWidth="1153.0" spacing="30.0" style="-fx-border-color: faa80a;">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <effect>
+                  <DropShadow />
+               </effect></HBox>
+            <HBox prefHeight="265.0" prefWidth="1305.0">
+               <effect>
+                  <DropShadow />
+               </effect>
             </HBox>
-            <!-- Additional smaller card-like layouts (HBox + AnchorPane) can be added within the VBox for multiple employees -->
          </children>
+         <effect>
+            <DropShadow />
+         </effect>
       </VBox>
-      <JFXButton fx:id="btnAddEmployee" buttonType="RAISED" layoutX="603.0" layoutY="14.0" onAction="#addnewEmployee" prefHeight="52.0" prefWidth="158.0" style="-fx-background-color: black;" text="Add new Employee" textFill="#f5eded" />
-      <JFXButton fx:id="btnUpdateEmployee" buttonType="RAISED" layoutX="798.0" layoutY="13.0" onAction="#updateOnAction" prefHeight="51.0" prefWidth="152.0" style="-fx-background-color: purple;" text="Update" textFill="#fcf3f3" />
-   </children>
+      <Label layoutX="571.0" layoutY="-3.0" text="Employees">
+         <font>
+            <Font name="Manjari Thin" size="40.0" />
+         </font>
+      </Label>
+    </children>
 </AnchorPane>
